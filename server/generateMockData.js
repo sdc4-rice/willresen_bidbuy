@@ -44,7 +44,7 @@ const generate = (startId, endId) => {
     fakeProducts.push(generateProduct(i));
   }
 
-  return db.Product.collection.insert(fakeProducts);
+  return db.Product.insertMany(fakeProducts);
 };
 
 // This function automatically runs when this file is run. Configure `startId`
@@ -58,5 +58,4 @@ const seedDatabase = (() => {
   generate(10, 20)
     .then(() => console.log('Database successfully seeded'))
     .catch(err => console.log('Error seeding database: ', err));
-
 })();
