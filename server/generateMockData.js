@@ -12,17 +12,27 @@ const sellerNote = () => {
   return Math.random() > 0.5 ? faker.lorem.sentence() : '';
 };
 
+// Returns a URL-friendly version of the given string. For example, 'John O'Riley' => 'john-oriley'.
+// This function will help produce names that can be more easily used in API requests.
+const urlify = (string) => {
+  return string.toLowerCase()
+    .replace(/\s/g, '-')
+    .replace(/[^a-zA-Z\-\d]/g, '');
+};
+
 // Roughly 80% of the productes should be returnable
 const returnsAllowed = () => {
   return Math.random() < 0.8;
 };
 
 // Returns an object representing a fake product
-// TODO: add "urlified" name. For example, 'John O'Riley' => 'john-oriley'
 const generateProduct = (id) => {
+  const name = faker.commerce.productName();
+
   return {
     id,
-    name: faker.commerce.productName(),
+    name,
+    'url-name': urlify(name),
     condition: randomCondition(),
     price: faker.commerce.price(),
     sellerNote: sellerNote(),
