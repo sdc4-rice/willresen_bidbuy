@@ -68,7 +68,7 @@ const seedDatabase = (() => {
   const endId = 110;
 
   db.Product.collection.drop()
-    .then(generate(10, 20))
+    .then(generate(startId, endId))
     .then(() => console.log('Database successfully seeded. Have a nice day.'))
     .catch(err => console.log('Error seeding database: ', err));
 })();
