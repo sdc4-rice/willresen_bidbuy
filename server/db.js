@@ -19,9 +19,4 @@ const Product = mongoose.model('Product', {
   returnsAllowed: Boolean
 });
 
-// const p1 = new Product({name: 'Another Golf club', 'url-name': 'golf-club2', expiresAt: new Date()});
-// p1.save().then(() => console.log('saved successfully'));
-
-Product.find().then(results => console.log(results));
-
 module.exports.Product = Product;
