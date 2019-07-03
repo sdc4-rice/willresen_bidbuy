@@ -1,0 +1,23 @@
+{
+  "name": "bid-buy",
+  "version": "",
+  "description": "",
+  "author": "tf3",
+  "license": "",
+  "engines": {
+    "node": ">=6.13.0"
+  },
+  "scripts": {},
+  "dependencies": {},
+  "devDependencies": {
+    "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fec4-gandolf/bid-buy.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fec4-gandolf/bid-buy/issues"
+  },
+  "homepage": "https://github.com/fec4-gandolf/bid-buy#readme"
+}
