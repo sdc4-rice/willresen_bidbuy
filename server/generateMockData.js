@@ -38,6 +38,9 @@ const generateProduct = (id) => {
 // This function generates fake produces and adds them to the database. It returns
 // a promise that resolves once all fake products have been added to the database.
 const generate = (startId, endId) => {
+  console.log('Seeding database...');
+  console.log(`Adding items with ids ${startId} to ${endId}`);
+
   const fakeProducts = [];
 
   for (let i = startId; i <= endId; i++) {
@@ -48,14 +51,14 @@ const generate = (startId, endId) => {
 };
 
 // This function automatically runs when this file is run. Configure `startId`
-// and `endId` as desired.
+// and `endId` as desired. Note: This drops the existing collection before adding
+// new data to it.
 const seedDatabase = (() => {
   const startId = 100;
   const endId = 110;
-  console.log('Seeding database...');
-  console.log(`Adding items with id ${startId} to ${endId}`);
 
-  generate(10, 20)
-    .then(() => console.log('Database successfully seeded'))
+  db.Product.collection.drop()
+    .then(generate(10, 20))
+    .then(() => console.log('Database successfully seeded. Have a nice day.'))
     .catch(err => console.log('Error seeding database: ', err));
 })();
