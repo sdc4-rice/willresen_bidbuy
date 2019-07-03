@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost:27017/products-bid-buy', {useNewUrlParser: true});
+mongoose.connect('mongodb://localhost:27017/products-bid-buy', {useNewUrlParser: true, useCreateIndex: true});
 
 const Product = mongoose.model('Product', {
   id: {
