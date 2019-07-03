@@ -1,0 +1,62 @@
+const db = require('./db.js');
+const faker = require('faker');
+
+// HELPER FUNCTIONS
+const randomCondition = () => {
+  const conditions = ['New', 'Mint', 'Used', 'Fair'];
+  return conditions[faker.random.number(3)];
+};
+
+// Roughly half the products should have notes from the seller
+const sellerNote = () => {
+  return Math.random() > 0.5 ? faker.lorem.sentence() : '';
+};
+
+// Roughly 80% of the productes should be returnable
+const returnsAllowed = () => {
+  return Math.random() < 0.8;
+};
+
+// Returns an object representing a fake product
+// TODO: add "urlified" name. For example, 'John O'Riley' => 'john-oriley'
+const generateProduct = (id) => {
+  return {
+    id,
+    name: faker.commerce.productName(),
+    condition: randomCondition(),
+    price: faker.commerce.price(),
+    sellerNote: sellerNote(),
+    expiresAt: faker.date.recent(-30), // a date up to 30 days in the future
+    watchers: faker.random.number(75),
+    bids: faker.random.number(50),
+    country: faker.address.country(),
+    returnsAllowed: returnsAllowed()
+  };
+};
+
+// MAIN FUNCTION
+// This function generates fake produces and adds them to the database. It returns
+// a promise that resolves once all fake products have been added to the database.
+const generate = (startId, endId) => {
+  const fakeProducts = [];
+
+  for (let i = startId; i <= endId; i++) {
+    fakeProducts.push(generateProduct(i));
+  }
+
+  return db.Product.collection.insert(fakeProducts);
+};
+
+// This function automatically runs when this file is run. Configure `startId`
+// and `endId` as desired.
+const seedDatabase = (() => {
+  const startId = 100;
+  const endId = 110;
+  console.log('Seeding database...');
+  console.log(`Adding items with id ${startId} to ${endId}`);
+
+  generate(10, 20)
+    .then(() => console.log('Database successfully seeded'))
+    .catch(err => console.log('Error seeding database: ', err));
+
+})();
