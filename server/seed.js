@@ -4,6 +4,6 @@
 // database is seeded with products. You can optionally pass in `startId` and
 // `endId` integer arguments to `handleSeeding`.
 
-const {handleSeeding} = require('./seedHelpers.js');
+const { handleSeeding } = require('./seedHelpers.js');
 
 handleSeeding();

@@ -1,11 +1,10 @@
-const {generateProduct} = require('./seedHelpers.js');
+const { generateProduct } = require('./seedHelpers.js');
 
 describe('product generator', () => {
   const product = generateProduct(1);
 
   test('returns an object', () => {
     expect(typeof generateProduct()).toBe('object');
-
   });
 
   test('returns an object with the correct keys', () => {
