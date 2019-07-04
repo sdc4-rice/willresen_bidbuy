@@ -1,6 +1,8 @@
 const {generateProduct} = require('./seedHelpers.js');
 
 describe('product generator', () => {
+  const product = generateProduct(1);
+
   test('returns an object', () => {
     expect(typeof generateProduct()).toBe('object');
 
@@ -10,15 +12,15 @@ describe('product generator', () => {
     const expectedKeys = ['id', 'name', 'condition', 'price', 'sellerNote', 'expiresAt',
       'watchers', 'bids', 'shippingCountry', 'returnsAllowed'];
 
-    expect(Object.keys(generateProduct(1))).toEqual(expect.arrayContaining(expectedKeys));
+    expect(Object.keys(product)).toEqual(expect.arrayContaining(expectedKeys));
   });
 
   test('returns an object with the correct value types', () => {
-    expect(generateProduct(1)).toEqual(expect.objectContaining({
+    expect(product).toEqual(expect.objectContaining({
       id: expect.any(Number),
       name: expect.any(String),
       condition: expect.any(String),
-      // price: expect.any(Number),
+      price: expect.any(Number),
       sellerNote: expect.any(String),
       expiresAt: expect.any(Date),
       watchers: expect.any(Number),
