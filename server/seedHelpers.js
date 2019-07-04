@@ -35,12 +35,12 @@ const generateProduct = (id) => {
     name,
     'url-name': urlify(name),
     condition: randomCondition(),
-    price: faker.commerce.price(),
+    price: parseFloat(faker.commerce.price()),
     sellerNote: sellerNote(),
     expiresAt: faker.date.recent(-30), // a date up to 30 days in the future
     watchers: faker.random.number(75),
     bids: faker.random.number(50),
-    country: faker.address.country(),
+    shippingCountry: faker.address.country(),
     returnsAllowed: returnsAllowed()
   };
 };
