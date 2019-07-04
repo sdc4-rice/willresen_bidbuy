@@ -26,5 +26,8 @@
   "bugs": {
     "url": "https://github.com/fec4-gandolf/bid-buy/issues"
   },
-  "homepage": "https://github.com/fec4-gandolf/bid-buy#readme"
+  "homepage": "https://github.com/fec4-gandolf/bid-buy#readme",
+  "jest": {
+    "testEnvironment": "node"
+  }
 }
