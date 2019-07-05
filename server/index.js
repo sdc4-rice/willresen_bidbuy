@@ -30,18 +30,14 @@ app.post('/bid/:id', (req, res) => {
     if (price < bid) {
       return true;
     }
-    throw 'Bid too low';
+    throw `Bid of $${bid} is not greater than $${price}.`;
   };
 
   Product.findOne({id})
     .then(product => validateBid(product.price))
-    .then(() => Product.findOneAndUpdate({id}, {price: bid}))
+    .then(() => Product.findOneAndUpdate({id}, {price: bid}, {new: true}))
     .then(newProduct => res.json(newProduct))
     .catch(err => res.json({error: true, message: err}));
-
-  // Product.findOneAndUpdate({id}, {price})
-  //   .then(dbResponse => res.json(dbResponse))
-  //   .catch(err => res.json(err));
 });
 
 app.listen(port, () => {
