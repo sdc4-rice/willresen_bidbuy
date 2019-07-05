@@ -9,7 +9,7 @@ app.use(express.json());
 app.get('/items/id/:id', (req, res) => {
   const id = req.params.id;
 
-  Product.find({id})
+  Product.findOne({id})
     .then(product => res.json(product))
     .catch(err => res.json(err));
 });
@@ -17,7 +17,7 @@ app.get('/items/id/:id', (req, res) => {
 app.get('/items/name/:name', (req, res) => {
   const name = req.params.name;
 
-  Product.find({'url-name': name})
+  Product.findOne({'url-name': name})
     .then(product => res.json(product))
     .catch(err => res.json(err));
 });
