@@ -18,7 +18,8 @@
   },
   "devDependencies": {
     "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
-    "jest": "^24.8.0"
+    "jest": "^24.8.0",
+    "request-promise": "^4.2.4"
   },
   "repository": {
     "type": "git",
