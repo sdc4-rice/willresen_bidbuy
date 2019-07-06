@@ -1,7 +1,16 @@
+const { mongoose } = require('./db.js');
 const { generateProduct } = require('./seedHelpers.js');
+
 
 describe('product generator', () => {
   const product = generateProduct(1);
+
+  afterAll(() => {
+    // This is necessary because, although the tests never explicitly connect to
+    // the database, they do require `seedHelpers.js`, which in turn requires
+    // `db.js`, which opens a database connection.
+    mongoose.disconnect();
+  });
 
   test('returns an object', () => {
     expect(typeof generateProduct()).toBe('object');

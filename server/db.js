@@ -23,4 +23,7 @@ const Product = mongoose.model('Product', {
   returnsAllowed: Boolean
 });
 
-module.exports.Product = Product;
+module.exports = {
+  Product,
+  mongoose
+};
