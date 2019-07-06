@@ -6,6 +6,12 @@ const app = express();
 
 app.use(express.json());
 
+app.get('/items', (req, res) => {
+  Product.find()
+    .then(products => res.json(products))
+    .catch(err => res.json(err));
+});
+
 app.get('/items/id/:id', (req, res) => {
   const id = req.params.id;
 
@@ -41,5 +47,9 @@ app.post('/bid/:id', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+  // console.log(`Listening on port ${port}`);
 });
+
+module.exports = {
+  app
+};
