@@ -40,14 +40,16 @@ app.post('/bid/:id', (req, res) => {
   };
 
   Product.findOne({id})
-    .then(product => validateBid(product.price))
-    .then(() => Product.findOneAndUpdate({id}, {price: bid}, {new: true}))
-    .then(newProduct => res.json(newProduct))
+    .then(product => product) // This shouldn't be necessary, but I get an error if I omit it
+    .tap(product => validateBid(product.price))
+    .then(product => product.bids + 1)
+    .then(bids => Product.findOneAndUpdate({id}, {price: bid, bids}, {new: true}))
+    .then(updatedProduct => res.json(updatedProduct))
     .catch(err => res.json({error: true, message: err}));
 });
 
 app.listen(port, () => {
-  // console.log(`Listening on port ${port}`);
+  console.log(`Listening on port ${port}`);
 });
 
 module.exports = {
