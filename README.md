@@ -1,6 +1,6 @@
 # bid-buy
 
-> The bid-buy component of an eBay auction page.
+The bid-buy component of an eBay auction page.
 
 ## Related Projects
 
@@ -16,7 +16,9 @@
 
 ## Usage
 
-> Some usage instructions
+First, make sure you have MongoDB installed and running.
+
+Then seed the database: `npm run seed`
 
 ## Requirements
 

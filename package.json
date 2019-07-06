@@ -7,10 +7,17 @@
   "engines": {
     "node": ">=6.13.0"
   },
-  "scripts": {},
-  "dependencies": {},
+  "scripts": {
+    "seed": "node server/seed.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "faker": "^4.1.0",
+    "mongoose": "^5.6.2"
+  },
   "devDependencies": {
-    "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor"
+    "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
+    "jest": "^24.8.0"
   },
   "repository": {
     "type": "git",
@@ -19,5 +26,8 @@
   "bugs": {
     "url": "https://github.com/fec4-gandolf/bid-buy/issues"
   },
-  "homepage": "https://github.com/fec4-gandolf/bid-buy#readme"
+  "homepage": "https://github.com/fec4-gandolf/bid-buy#readme",
+  "jest": {
+    "testEnvironment": "node"
+  }
 }
