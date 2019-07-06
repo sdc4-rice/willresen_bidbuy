@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+mongoose.Promise = require('bluebird');
+
 const dbName = 'products-bid-buy';
 
 mongoose.connect(`mongodb://localhost:27017/${dbName}`, {useNewUrlParser: true, useCreateIndex: true});
