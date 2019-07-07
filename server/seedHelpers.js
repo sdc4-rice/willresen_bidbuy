@@ -71,7 +71,7 @@ const seed = (startId, endId) => {
 const handleSeeding = (startId = 100, endId = 110) => {
   return db.handleConnect()
     .then(() => Product.collection.drop())
-    .then(seed(startId, endId))
+    .then(() => seed(startId, endId))
     .then(() => console.log('Database successfully seeded. Have a nice day.'))
     .catch(err => console.log('Error seeding database: ', err));
 };
