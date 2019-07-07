@@ -73,7 +73,10 @@ const handleSeeding = (startId = 100, endId = 110) => {
     .then(() => Product.collection.drop())
     .then(() => seed(startId, endId))
     .then(() => console.log('Database successfully seeded. Have a nice day.'))
-    .catch(err => console.log('Error seeding database: ', err));
+    .catch(err => {
+      console.log('Error seeding database:', err);
+      throw err;
+    });
 };
 
 module.exports = {
