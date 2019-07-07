@@ -1,7 +1,6 @@
 const rp = require('request-promise');
 const db = require('./db.js');
 const Product = require('./model.js');
-const { handleSeeding, seed } = require('./seedHelpers.js');
 const { app } = require('./index.js');
 
 

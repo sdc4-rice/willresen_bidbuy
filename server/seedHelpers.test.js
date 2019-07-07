@@ -1,5 +1,5 @@
 const db = require('./db.js');
-const { generateProduct, seed } = require('./seedHelpers.js');
+const { generateProduct, handleSeeding } = require('./seedHelpers.js');
 const Product = require('./model.js');
 
 beforeAll(() => {
@@ -42,8 +42,7 @@ describe('product generator', () => {
 
 describe('seeder', () => {
   beforeAll(() => {
-    return Product.collection.drop()
-      .then(() => seed(100, 110));
+    return handleSeeding();
   });
 
   test('seeds database with multiple products', () => {
