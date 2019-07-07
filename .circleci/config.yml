@@ -2,9 +2,11 @@ jobs:
   test:
     docker:
       - image: circleci/node:10.16.0
+      - image: circleci/mongo:4.0.10
     steps:
       - checkout
       - run: npm install
+      - run: npm run seed
       - run: npm test
 workflows:
   version: 2
