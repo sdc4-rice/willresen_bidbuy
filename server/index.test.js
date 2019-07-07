@@ -47,23 +47,23 @@ describe('API routes', () => {
   });
 
   // GET '/items/id/' routes
-  test('/items/id/:id responds object of the correct structure', () => {
+  test('/items/id/:id responds with an object of the correct structure', () => {
     return rp(rpOptionsGet(`/items/id/${productId}`))
       .then(product => expect(Object.keys(product)).toEqual(Object.keys(expectedProduct)));
   });
 
-  test('/items/id/:id responds object of the correct values', () => {
+  test('/items/id/:id responds with an object of the correct values', () => {
     return rp(rpOptionsGet(`/items/id/${productId}`))
       .then(product => expect(product.name).toEqual(expectedProduct.name));
   });
 
   // GET '/items/name/' routes
-  test('/items/name/:name responds object of the correct structure', () => {
+  test('/items/name/:name responds with an object of the correct structure', () => {
     return rp(rpOptionsGet(`/items/name/${productName}`))
       .then(product => expect(Object.keys(product)).toEqual(Object.keys(expectedProduct)));
   });
 
-  test('/items/name/:name responds object of the correct values', () => {
+  test('/items/name/:name responds with an object of the correct values', () => {
     return rp(rpOptionsGet(`/items/name/${productName}`))
       .then(product => expect(product.name).toEqual(expectedProduct.name));
   });
@@ -74,7 +74,7 @@ describe('API routes', () => {
       .then(res => expect(res.error).toEqual(true));
   });
 
-  test('/bid/:id responds with the updated if product if the bid is high enough', () => {
+  test('/bid/:id responds with the updated product if the bid is high enough', () => {
     return rp(rpOptionsPost(productId, expectedProduct.price + 1))
       .then(product => expect(product.bids).toEqual(expectedProduct.bids + 1));
   });
