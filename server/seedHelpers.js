@@ -67,7 +67,7 @@ const seed = (startId, endId) => {
 // `seed` directly.
 // Configure `startId` and `endId` defaults as desired.
 const handleSeeding = (startId = 100, endId = 110) => {
-  db.Product.collection.drop()
+  return db.Product.collection.drop()
     .then(seed(startId, endId))
     .then(() => console.log('Database successfully seeded. Have a nice day.'))
     .catch(err => console.log('Error seeding database: ', err));
