@@ -3,14 +3,26 @@ const { Product, mongoose } = require('./db.js');
 const { handleSeeding } = require('./seedHelpers.js');
 const { app } = require('./index.js');
 
-const rpOptions = (endpoint) => {
+
+// `rpOptionsGet` and `rpOptionsPost` generate options objects for rp.
+const rpOptionsGet = (endpoint) => {
   return {
     uri: `http://localhost:3001${endpoint}`,
     json: true
   };
 };
 
-describe('GET routes', () => {
+const rpOptionsPost = (id, bid) => {
+  return {
+    method: 'POST',
+    url: `http://localhost:3001/bid/${id}`,
+    body: {bid},
+    json: true
+  };
+};
+
+// The database should be seeded with `npm run seed` before these tests are run.
+describe('API routes', () => {
 
   // Since the products could have any ids and names, we need to query the
   // database to get an actual product id and name. We can then use the id and
@@ -33,26 +45,36 @@ describe('GET routes', () => {
     mongoose.disconnect();
   });
 
-  // '/items/id/' routes
+  // GET '/items/id/' routes
   test('/items/id/:id responds object of the correct structure', () => {
-    return rp(rpOptions(`/items/id/${productId}`))
+    return rp(rpOptionsGet(`/items/id/${productId}`))
       .then(product => expect(Object.keys(product)).toEqual(Object.keys(expectedProduct)));
   });
 
   test('/items/id/:id responds object of the correct values', () => {
-    return rp(rpOptions(`/items/id/${productId}`))
+    return rp(rpOptionsGet(`/items/id/${productId}`))
       .then(product => expect(product.name).toEqual(expectedProduct.name));
   });
 
-  // '/items/name/' routes
+  // GET '/items/name/' routes
   test('/items/name/:name responds object of the correct structure', () => {
-    return rp(rpOptions(`/items/name/${productName}`))
+    return rp(rpOptionsGet(`/items/name/${productName}`))
       .then(product => expect(Object.keys(product)).toEqual(Object.keys(expectedProduct)));
   });
 
   test('/items/name/:name responds object of the correct values', () => {
-    return rp(rpOptions(`/items/name/${productName}`))
+    return rp(rpOptionsGet(`/items/name/${productName}`))
       .then(product => expect(product.name).toEqual(expectedProduct.name));
   });
 
+  // POST '/bid/' route
+  test('/bid/:id responds with an error object if bid is too low', () => {
+    return rp(rpOptionsPost(productId, expectedProduct.price - 1))
+      .then(res => expect(res.error).toEqual(true));
+  });
+
+  test('/bid/:id responds with the updated if product if the bid is high enough', () => {
+    return rp(rpOptionsPost(productId, expectedProduct.price + 1))
+      .then(product => expect(product.bids).toEqual(expectedProduct.bids + 1));
+  });
 });
