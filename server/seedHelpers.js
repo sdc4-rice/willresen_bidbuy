@@ -1,4 +1,5 @@
 const db = require('./db.js');
+const Product = require('./model.js');
 const faker = require('faker');
 
 // HELPER FUNCTIONS
@@ -58,7 +59,8 @@ const seed = (startId, endId) => {
     fakeProducts.push(generateProduct(i));
   }
 
-  return db.Product.insertMany(fakeProducts);
+  return db.handleConnect()
+    .then(() => Product.insertMany(fakeProducts));
 };
 
 // This function drops the existing collection, runs `seed` to seed the
@@ -67,7 +69,8 @@ const seed = (startId, endId) => {
 // `seed` directly.
 // Configure `startId` and `endId` defaults as desired.
 const handleSeeding = (startId = 100, endId = 110) => {
-  return db.Product.collection.drop()
+  return db.handleConnect()
+    .then(() => Product.collection.drop())
     .then(seed(startId, endId))
     .then(() => console.log('Database successfully seeded. Have a nice day.'))
     .catch(err => console.log('Error seeding database: ', err));
@@ -75,5 +78,6 @@ const handleSeeding = (startId = 100, endId = 110) => {
 
 module.exports = {
   generateProduct,
+  seed,
   handleSeeding
 };

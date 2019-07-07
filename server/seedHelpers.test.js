@@ -1,16 +1,17 @@
-const { mongoose } = require('./db.js');
-const { generateProduct } = require('./seedHelpers.js');
+const db = require('./db.js');
+const { generateProduct, seed } = require('./seedHelpers.js');
+const Product = require('./model.js');
 
+beforeAll(() => {
+  db.handleConnect();
+});
+
+afterAll(() => {
+  db.mongoose.disconnect();
+});
 
 describe('product generator', () => {
   const product = generateProduct(1);
-
-  afterAll(() => {
-    // This is necessary because, although the tests never explicitly connect to
-    // the database, they do require `seedHelpers.js`, which in turn requires
-    // `db.js`, which opens a database connection.
-    mongoose.disconnect();
-  });
 
   test('returns an object', () => {
     expect(typeof generateProduct()).toBe('object');
@@ -36,5 +37,17 @@ describe('product generator', () => {
       shippingCountry: expect.any(String),
       returnsAllowed: expect.any(Boolean)
     }));
+  });
+});
+
+describe('seeder', () => {
+  beforeAll(() => {
+    return Product.collection.drop()
+      .then(() => seed(100, 110));
+  });
+
+  test('seeds database with multiple products', () => {
+    return Product.find()
+      .then(products => expect(products.length > 0).toBe(true));
   });
 });

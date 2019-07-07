@@ -1,10 +1,11 @@
 const express = require('express');
-const { Product } = require('./db.js');
-
+const db = require('./db.js');
+const Product = require('./model.js');
 const port = 3001;
 const app = express();
 
 app.use(express.json());
+db.handleConnect();
 
 app.get('/items', (req, res) => {
   Product.find()

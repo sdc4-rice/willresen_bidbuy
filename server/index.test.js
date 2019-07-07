@@ -1,6 +1,7 @@
 const rp = require('request-promise');
-const { Product, mongoose } = require('./db.js');
-const { handleSeeding } = require('./seedHelpers.js');
+const db = require('./db.js');
+const Product = require('./model.js');
+const { handleSeeding, seed } = require('./seedHelpers.js');
 const { app } = require('./index.js');
 
 
@@ -32,7 +33,8 @@ describe('API routes', () => {
   let expectedProduct;
 
   beforeAll(() => {
-    return Product.findOne()
+    return db.handleConnect()
+      .then(() => Product.findOne())
       .then((product) => {
         productId = product.id;
         productName = product['url-name'];
@@ -42,7 +44,7 @@ describe('API routes', () => {
 
   afterAll(() => {
     app.close();
-    mongoose.disconnect();
+    db.mongoose.disconnect();
   });
 
   // GET '/items/id/' routes

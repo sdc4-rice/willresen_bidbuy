@@ -1,31 +1,18 @@
 const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 
-const dbName = 'products-bid-buy';
+const database = 'products-bid-buy';
 
-mongoose.connect(`mongodb://localhost:27017/${dbName}`, {useNewUrlParser: true, useCreateIndex: true});
-
-const Product = mongoose.model('Product', {
-  id: {
-    type: Number,
-    unique: true
-  },
-  name: String,
-  'url-name': {
-    type: String,
-    unique: true
-  },
-  condition: String,
-  price: Number,
-  sellerNote: String,
-  expiresAt: Date,
-  watchers: Number,
-  bids: Number,
-  shippingCountry: String,
-  returnsAllowed: Boolean
-});
+const handleConnect = () => {
+  if (mongoose.connection.readyState === 0) { // not connected to database
+    const dbName = 'products-bid-buy';
+    return mongoose.connect(`mongodb://localhost:27017/${database}`, {useNewUrlParser: true, useCreateIndex: true});
+  }
+  return Promise.resolve(false); // already connected
+};
 
 module.exports = {
-  Product,
-  mongoose
+  database,
+  mongoose,
+  handleConnect
 };
