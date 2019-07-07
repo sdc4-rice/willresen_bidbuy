@@ -1,6 +1,14 @@
-const { Product, mongoose } = require('./db.js');
 const rp = require('request-promise');
+const { Product, mongoose } = require('./db.js');
+const { handleSeeding } = require('./seedHelpers.js');
 const { app } = require('./index.js');
+
+const rpOptions = (endpoint) => {
+  return {
+    uri: `http://localhost:3001${endpoint}`,
+    json: true
+  };
+};
 
 describe('GET routes', () => {
 
@@ -9,12 +17,14 @@ describe('GET routes', () => {
   // name to test the API routes.
   let productId;
   let productName;
+  let expectedProduct;
 
   beforeAll(() => {
-    return Product.find()
-      .then(([product, ...others]) => {
+    return Product.findOne()
+      .then((product) => {
         productId = product.id;
         productName = product['url-name'];
+        expectedProduct = product.toObject(); // turns the mongoose model into a simpler object
       });
   });
 
@@ -23,17 +33,26 @@ describe('GET routes', () => {
     mongoose.disconnect();
   });
 
-  test('/items/id/:id responds with JSON object', () => {
-    console.log(productId);
-    return rp(`http://localhost:3001/items/id/${productId}`)
-      .then(productJSON => JSON.parse(productJSON))
-      .then(product => expect(typeof product).toBe('object'));
+  // '/items/id/' routes
+  test('/items/id/:id responds object of the correct structure', () => {
+    return rp(rpOptions(`/items/id/${productId}`))
+      .then(product => expect(Object.keys(product)).toEqual(Object.keys(expectedProduct)));
   });
 
-  test('/items/name/:name responds with JSON object', () => {
-    console.log(productId);
-    return rp(`http://localhost:3001/items/name/${productName}`)
-      .then(productJSON => JSON.parse(productJSON))
-      .then(product => expect(typeof product).toBe('object'));
+  test('/items/id/:id responds object of the correct values', () => {
+    return rp(rpOptions(`/items/id/${productId}`))
+      .then(product => expect(product.name).toEqual(expectedProduct.name));
   });
+
+  // '/items/name/' routes
+  test('/items/name/:name responds object of the correct structure', () => {
+    return rp(rpOptions(`/items/name/${productName}`))
+      .then(product => expect(Object.keys(product)).toEqual(Object.keys(expectedProduct)));
+  });
+
+  test('/items/name/:name responds object of the correct values', () => {
+    return rp(rpOptions(`/items/name/${productName}`))
+      .then(product => expect(product.name).toEqual(expectedProduct.name));
+  });
+
 });
