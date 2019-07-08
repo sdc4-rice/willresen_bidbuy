@@ -16,14 +16,18 @@ class BidBuy extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      product: {price: 0}
+      product: {price: 0},
+      productId: 0
     };
 
+    this.getId = this.getId.bind(this);
     this.fetchItem = this.fetchItem.bind(this);
   }
 
-  componentDidMount() {
-    this.fetchItem(103); // TODO: change this
+  // The id of the current item is the number after '?' in the URL. For example,
+  // for the URL 'http://localhost:3001/?103', the id of the current item is 103.
+  getId() {
+    return window.location.href.split('?')[1];
   }
 
   fetchItem(id) {
@@ -31,6 +35,10 @@ class BidBuy extends React.Component {
       .then(response => response.json())
       .then(product => this.setState({product}))
       .catch(console.log);
+  }
+
+  componentDidMount() {
+    this.fetchItem(this.getId());
   }
 
   render() {
