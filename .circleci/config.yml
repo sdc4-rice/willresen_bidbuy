@@ -13,7 +13,6 @@ jobs:
       - run:
           name: wait for db
           command: dockerize -wait tcp://localhost:27017 -timeout 1m
-      - run: mongo
       - run: npm install
       - run: npm run seed
       - run: npm test
