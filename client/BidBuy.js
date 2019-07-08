@@ -18,7 +18,8 @@ const placeholder = {
 };
 
 const SellerNote = styled.td`
-  font-style: italic
+  font-style: italic;
+  padding-left: 1em;
 `;
 
 const BidButton = styled.button`
@@ -29,20 +30,29 @@ const BidButton = styled.button`
   border-radius: 5px;
   font-size: 13pt;
   width: 128px;
-  padding: 5px 0 5px 0;
+  padding: 5px 0;
+  margin: 1em 0;
   :active {
     position: relative;
     top: 1px;
   }
 `;
 
+// #636363
+
 const Table = styled.table`
   font-family: sans-serif;
+  background: #f7f7f7;
   border-spacing: 0;
+  font-size: 11pt;
+  width: 500px;
+`;
+
+const Td = styled.td`
+  padding: 1em;
 `;
 
 const TopRow = styled.tr`
-
 `;
 
 const MiddleRow = styled.tr`
@@ -51,7 +61,7 @@ const MiddleRow = styled.tr`
 `;
 
 const BottomRow = styled.tr`
-  text-align: center
+  text-align: center;
 `;
 
 const Span = styled.span`
@@ -71,40 +81,40 @@ class BidBuy extends React.Component {
 
     return (
       <div>
-        <h2>Bid-Buy Placeholder</h2>
-        <h3>{product.name}</h3>
         <Table>
           <tbody>
-            <tr>
-              <td>Condition</td>
-              <td><strong>{product.condition}</strong></td>
-            </tr>
-            <tr>
-              <td></td>
-              <SellerNote>"{product.sellerNote}"</SellerNote>
-            </tr>
-            <tr>
-              <td>Time Left</td>
-              <td>{date.toLocaleDateString()}</td>
-            </tr>
+            <TopRow>
+              <Td>Condition:</Td>
+              <Td><strong>{product.condition}</strong></Td>
+            </TopRow>
+            {product.sellerNote ? (
+              <TopRow>
+                <Td></Td>
+                <SellerNote>"{product.sellerNote}"</SellerNote>
+              </TopRow>
+            ) : null}
+            <TopRow>
+              <Td>Time Left:</Td>
+              <Td>{date.toLocaleDateString()}</Td>
+            </TopRow>
             <MiddleRow>
-              <td>Current Bid:</td>
-              <td className="currentBid">
+              <Td>Current Bid:</Td>
+              <Td>
                 US ${product.price}
                 <form>
                   <input type="text"></input> <br />
-                  <Span>Enter more than ${product.price}</Span>
+                  <Span>Enter US ${product.price + 1} or more</Span>
                 </form>
-              </td>
-              <td>
-                [ <a href="#">{product.bids} bids</a> ]
+              </Td>
+              <Td>
+                [ <a>{product.bids} bids</a> ]
                 <BidButton>Place bid</BidButton>
-              </td>
+              </Td>
             </MiddleRow>
             <BottomRow>
-              <td>{product.watchers} watchers</td>
-              <td>Ships from {product.shippingCountry}</td>
-              <td>{product.returnsAllowed ? '30-day returns' : 'No returns'}</td>
+              <Td>{product.watchers} watchers</Td>
+              <Td>Ships from {product.shippingCountry}</Td>
+              <Td>{product.returnsAllowed ? '30-day returns' : 'No returns'}</Td>
             </BottomRow>
           </tbody>
         </Table>
