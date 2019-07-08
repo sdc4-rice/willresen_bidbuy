@@ -4,22 +4,6 @@ import TopInfo from './TopInfo.js';
 import BidInfo from './BidInfo.js';
 import MiscInfo from './MiscInfo.js';
 
-const placeholder = {
-  "_id": "5d23357882b9176777ec76b5",
-  "id": 109,
-  "name": "Fantastic Concrete Fish",
-  "url-name": "fantastic-concrete-fish",
-  "condition": "New",
-  "price": 564,
-  "sellerNote": "Numquam eius laborum.",
-  "expiresAt": "2019-07-28T18:05:33.973Z",
-  "watchers": 26,
-  "bids": 37,
-  "shippingCountry": "Eritrea",
-  "returnsAllowed": true,
-  "__v": 0
-};
-
 const Table = styled.table`
   background: #f7f7f7;
   border-spacing: 0;
@@ -31,11 +15,26 @@ const Table = styled.table`
 class BidBuy extends React.Component {
   constructor(props) {
     super(props);
-    this.state = placeholder;
+    this.state = {
+      product: {price: 0}
+    };
+
+    this.fetchItem = this.fetchItem.bind(this);
+  }
+
+  componentDidMount() {
+    this.fetchItem(103); // TODO: change this
+  }
+
+  fetchItem(id) {
+    fetch(`http://localhost:3001/items/id/${id}`)
+      .then(response => response.json())
+      .then(product => this.setState({product}))
+      .catch(console.log);
   }
 
   render() {
-    const product = this.state;
+    const product = this.state.product;
 
     return (
       <div>
