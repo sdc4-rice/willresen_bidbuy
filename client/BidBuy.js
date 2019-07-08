@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 
 const placeholder = {
   "_id": "5d23357882b9176777ec76b5",
@@ -15,6 +16,27 @@ const placeholder = {
   "returnsAllowed": true,
   "__v": 0
 };
+
+const SellerNote = styled.td`
+  font-style: italic
+`;
+
+const BidButton = styled.button`
+  background: #0068af;
+  color: #fff
+  font-weight: bold;
+  display: block;
+  border-radius: 5px;
+  font-size: 13pt;
+  width: 128px;
+  padding: 5px 0 5px 0;
+  font-family: sans-serif;
+
+  :active {
+    position: relative;
+    top: 1px;
+  }
+`;
 
 class BidBuy extends React.Component {
   constructor(props) {
@@ -38,7 +60,7 @@ class BidBuy extends React.Component {
             </tr>
             <tr>
               <td></td>
-              <td className="sellerNote">"{product.sellerNote}"</td>
+              <SellerNote>"{product.sellerNote}"</SellerNote>
             </tr>
             <tr>
               <td>Time Left</td>
@@ -55,7 +77,7 @@ class BidBuy extends React.Component {
               </td>
               <td>
                 [ <a href="#">{product.bids} bids</a> ]
-                <button>Place Bid</button>
+                <BidButton>Place bid</BidButton>
               </td>
             </tr>
             <tr>
@@ -66,6 +88,11 @@ class BidBuy extends React.Component {
 
           </tbody>
         </table>
+        {/* <div className="bottom">
+          <div>{product.watchers} watchers</div>
+          <div>Ships from {product.shippingCountry}</div>
+          <div>{product.returnsAllowed ? '30-day returns' : 'No returns'}</div>
+        </div> */}
       </div>
     );
   }
