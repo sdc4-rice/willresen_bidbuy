@@ -11,7 +11,9 @@
     "seed": "node server/seed.js",
     "test": "jest",
     "start": "node server/index.js",
-    "start:dev": "nodemon server/index.js"
+    "start:dev": "nodemon server/index.js",
+    "build": "webpack -p",
+    "build:dev": "webpack -dw"
   },
   "dependencies": {
     "@babel/core": "^7.5.0",
