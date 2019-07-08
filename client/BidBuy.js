@@ -30,12 +30,33 @@ const BidButton = styled.button`
   font-size: 13pt;
   width: 128px;
   padding: 5px 0 5px 0;
-  font-family: sans-serif;
-
   :active {
     position: relative;
     top: 1px;
   }
+`;
+
+const Table = styled.table`
+  font-family: sans-serif;
+  border-spacing: 0;
+`;
+
+const TopRow = styled.tr`
+
+`;
+
+const MiddleRow = styled.tr`
+  background: #e2e2e2;
+  vertical-align: top;
+`;
+
+const BottomRow = styled.tr`
+  text-align: center
+`;
+
+const Span = styled.span`
+  font-size: small;
+  color: #666;
 `;
 
 class BidBuy extends React.Component {
@@ -52,11 +73,11 @@ class BidBuy extends React.Component {
       <div>
         <h2>Bid-Buy Placeholder</h2>
         <h3>{product.name}</h3>
-        <table>
+        <Table>
           <tbody>
             <tr>
               <td>Condition</td>
-              <td>{product.condition}</td>
+              <td><strong>{product.condition}</strong></td>
             </tr>
             <tr>
               <td></td>
@@ -66,33 +87,27 @@ class BidBuy extends React.Component {
               <td>Time Left</td>
               <td>{date.toLocaleDateString()}</td>
             </tr>
-            <tr>
+            <MiddleRow>
               <td>Current Bid:</td>
               <td className="currentBid">
                 US ${product.price}
                 <form>
-                  <input type="text"></input>
-                  Enter more than ${product.price}
+                  <input type="text"></input> <br />
+                  <Span>Enter more than ${product.price}</Span>
                 </form>
               </td>
               <td>
                 [ <a href="#">{product.bids} bids</a> ]
                 <BidButton>Place bid</BidButton>
               </td>
-            </tr>
-            <tr>
+            </MiddleRow>
+            <BottomRow>
               <td>{product.watchers} watchers</td>
               <td>Ships from {product.shippingCountry}</td>
               <td>{product.returnsAllowed ? '30-day returns' : 'No returns'}</td>
-            </tr>
-
+            </BottomRow>
           </tbody>
-        </table>
-        {/* <div className="bottom">
-          <div>{product.watchers} watchers</div>
-          <div>Ships from {product.shippingCountry}</div>
-          <div>{product.returnsAllowed ? '30-day returns' : 'No returns'}</div>
-        </div> */}
+        </Table>
       </div>
     );
   }
