@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import moment from 'moment';
 
 const Td = styled.td`
   padding: 1em;
@@ -10,6 +11,11 @@ const TopRow = styled.tr`
 
 const SellerNote = styled.td`
   font-style: italic;
+  padding-left: 1em;
+`;
+
+const Span = styled.span`
+  font-size: 9pt;
   padding-left: 1em;
 `;
 
@@ -27,7 +33,10 @@ const TopInfo = ({product}) => (
     ) : null}
     <TopRow>
       <Td>Time Left:</Td>
-      <Td>{new Date(product.expiresAt).toLocaleDateString()}</Td>
+      <Td>
+        {moment(product.expiresAt).fromNow(true)}
+        <Span>{moment(product.expiresAt).format('dddd, h:mmA')}</Span>
+      </Td>
     </TopRow>
   </tbody>
 );
