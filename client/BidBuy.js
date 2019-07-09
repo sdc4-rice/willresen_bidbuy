@@ -73,7 +73,7 @@ class BidBuy extends React.Component {
   render() {
     const product = this.state.product;
 
-    return (
+    return product ? (
       <Div>
         <Heading>{product.name}</Heading>
         <Table>
@@ -81,6 +81,10 @@ class BidBuy extends React.Component {
           <BidInfo product={product} placeBid={this.placeBid} />
           <MiscInfo product={product} />
         </Table>
+      </Div>
+    ) : (
+      <Div>
+        Error: Product with id {this.getId()} not found
       </Div>
     );
   }
