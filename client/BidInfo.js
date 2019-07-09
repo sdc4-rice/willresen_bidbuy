@@ -32,23 +32,37 @@ const BidButton = styled.button`
   }
 `;
 
-const BidInfo = ({product}) => (
-  <tbody>
-    <MiddleRow>
-      <Td>Current Bid:</Td>
-      <Td>
-        US ${product.price.toFixed(2)}
-        <form>
-          <input type="text"></input> <br />
-          <Span>Enter US ${(product.price + 1).toFixed(2)} or more</Span>
-        </form>
-      </Td>
-      <Td>
-        [ <a>{product.bids} bids</a> ]
-        <BidButton>Place bid</BidButton>
-      </Td>
-    </MiddleRow>
-  </tbody>
-);
+class BidInfo extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      bid: ''
+    };
+  }
+
+  render() {
+    const product = this.props.product;
+
+    return (
+      <tbody>
+        <MiddleRow>
+          <Td>Current Bid:</Td>
+          <Td>
+            US ${product.price.toFixed(2)}
+            <form>
+              <input type="text"></input> <br />
+              <Span>Enter US ${(product.price + 1).toFixed(2)} or more</Span>
+            </form>
+          </Td>
+          <Td>
+            [ <a>{product.bids} bids</a> ]
+            <BidButton>Place bid</BidButton>
+          </Td>
+        </MiddleRow>
+      </tbody>
+    );
+  }
+}
 
 export default BidInfo;
