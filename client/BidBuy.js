@@ -4,12 +4,23 @@ import TopInfo from './TopInfo.js';
 import BidInfo from './BidInfo.js';
 import MiscInfo from './MiscInfo.js';
 
-const Table = styled.table`
+const Div = styled.div`
   background: #f7f7f7;
-  border-spacing: 0;
   font-family: sans-serif;
-  font-size: 11pt;
   width: 500px;
+`;
+
+const Table = styled.table`
+  font-size: 11pt;
+  border-spacing: 0;
+  width: 500px;
+`;
+
+const Heading = styled.h2`
+  font-size: 14pt;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid #e2e2e2;
+  margin: 0;
 `;
 
 class BidBuy extends React.Component {
@@ -45,13 +56,14 @@ class BidBuy extends React.Component {
     const product = this.state.product;
 
     return (
-      <div>
+      <Div>
+        <Heading>{product.name}</Heading>
         <Table>
           <TopInfo product={product} />
           <BidInfo product={product} />
           <MiscInfo product={product} />
         </Table>
-      </div>
+      </Div>
     );
   }
 }
