@@ -4,6 +4,12 @@ import TopInfo from './TopInfo.js';
 import BidInfo from './BidInfo.js';
 import MiscInfo from './MiscInfo.js';
 
+const Code = styled.div`
+  font-family: monospace;
+  margin: 1em;
+  padding: 1em;
+`;
+
 const Div = styled.div`
   background: #f7f7f7;
   font-family: sans-serif;
@@ -31,22 +37,60 @@ class BidBuy extends React.Component {
       productId: 0
     };
 
+    this.parseUrl = this.parseUrl.bind(this);
     this.getId = this.getId.bind(this);
-    this.fetchItem = this.fetchItem.bind(this);
+    this.getName = this.getName.bind(this);
+    this.fetchItemById = this.fetchItemById.bind(this);
+    this.fetchItemByName = this.fetchItemByName.bind(this);
     this.placeBid = this.placeBid.bind(this);
+  }
+
+  parseUrl() {
+    const params = window.location.href.split('?')[1];
+    return params.split('=');
   }
 
   // The id of the current item is the number after '?' in the URL. For example,
   // for the URL 'http://localhost:3001/?103', the id of the current item is 103.
   getId() {
-    return window.location.href.split('?')[1];
+    const [key, value] = this.parseUrl();
+    if (key === 'id') {
+      return value;
+    }
+    return null;
   }
 
-  fetchItem(id) {
+  getName() {
+    const [key, value] = this.parseUrl();
+    if (key === 'name') {
+      return value;
+    }
+    return null;
+  }
+
+  fetchItemById(id) {
     fetch(`http://localhost:3001/items/id/${id}`)
       .then(response => response.json())
       .then(product => this.setState({product}))
       .catch(console.log);
+  }
+
+  fetchItemByName(name) {
+    fetch(`http://localhost:3001/items/name/${name}`)
+      .then(response => response.json())
+      .then(product => this.setState({product}))
+      .catch(console.log);
+  }
+
+  fetchItem() {
+    const id = this.getId();
+    const name = this.getName();
+
+    if (id) {
+      this.fetchItemById(id);
+    } else {
+      this.fetchItemByName(name);
+    }
   }
 
   placeBid(bid) {
@@ -67,7 +111,7 @@ class BidBuy extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchItem(this.getId());
+    this.fetchItem();
   }
 
   render() {
@@ -84,7 +128,11 @@ class BidBuy extends React.Component {
       </Div>
     ) : (
       <Div>
-        Error: Product with id {this.getId()} not found
+        Product not found
+        <Code>
+          id: {this.getId()} <br />
+          name: {this.getName()}
+        </Code>
       </Div>
     );
   }
