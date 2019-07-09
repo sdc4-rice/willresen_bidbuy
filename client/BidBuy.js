@@ -45,27 +45,28 @@ class BidBuy extends React.Component {
     this.placeBid = this.placeBid.bind(this);
   }
 
+  // Returns an array consisting of the key value pair after the '?' in the URL.
+  // For example, if the URL is http://localhost:3001/?id=103, `parseUrl()` returns
+  // ['id', '103'],
   parseUrl() {
     const params = window.location.href.split('?')[1];
     return params.split('=');
   }
 
-  // The id of the current item is the number after '?' in the URL. For example,
-  // for the URL 'http://localhost:3001/?103', the id of the current item is 103.
+  // The id of the current item is the value of the 'id' parameter in the URL.
+  // For example, for the URL 'http://localhost:3001/?id=103', the id of the
+  // current item is '103'.
   getId() {
     const [key, value] = this.parseUrl();
-    if (key === 'id') {
-      return value;
-    }
-    return null;
+    return key === 'id' ? value : null;
   }
 
+  // The name of the current item is the value of the 'name' parameter in the
+  // URL. For example, for the URL 'http://localhost:3001/?name=fantastic-concrete-fish',
+  // the name of the current item is 'fantastic-concrete-fish'.
   getName() {
     const [key, value] = this.parseUrl();
-    if (key === 'name') {
-      return value;
-    }
-    return null;
+    return key === 'name' ? value : null;
   }
 
   fetchItemById(id) {
