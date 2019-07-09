@@ -1,4 +1,14 @@
-const { generateProduct } = require('./seedHelpers.js');
+const db = require('./db.js');
+const { generateProduct, handleSeeding } = require('./seedHelpers.js');
+const Product = require('./model.js');
+
+beforeAll(() => {
+  db.handleConnect();
+});
+
+afterAll(() => {
+  db.mongoose.disconnect();
+});
 
 describe('product generator', () => {
   const product = generateProduct(1);
@@ -27,5 +37,16 @@ describe('product generator', () => {
       shippingCountry: expect.any(String),
       returnsAllowed: expect.any(Boolean)
     }));
+  });
+});
+
+describe('seeder', () => {
+  beforeAll(() => {
+    return handleSeeding();
+  });
+
+  test('seeds database with multiple products', () => {
+    return Product.find()
+      .then(products => expect(products.length > 0).toBe(true));
   });
 });

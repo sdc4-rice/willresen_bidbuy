@@ -2,9 +2,19 @@ jobs:
   test:
     docker:
       - image: circleci/node:10.16.0
+      - image: circleci/mongo:4.0.10
     steps:
       - checkout
+      - run:
+          name: install dockerize
+          command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+          environment:
+            DOCKERIZE_VERSION: v0.6.1
+      - run:
+          name: wait for db
+          command: dockerize -wait tcp://localhost:27017 -timeout 1m
       - run: npm install
+      - run: npm run seed
       - run: npm test
 workflows:
   version: 2
