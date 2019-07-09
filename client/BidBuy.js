@@ -33,8 +33,7 @@ class BidBuy extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      product: {price: 0},
-      productId: 0
+      product: {price: 0}
     };
 
     this.parseUrl = this.parseUrl.bind(this);
@@ -95,7 +94,7 @@ class BidBuy extends React.Component {
   }
 
   placeBid(bid) {
-    fetch(`http://localhost:3001/bid/${this.getId()}`, {
+    fetch(`http://localhost:3001/bid/${this.state.product.id}`, {
       body: JSON.stringify({bid}),
       headers: {
         'Content-Type': 'application/json'
@@ -104,9 +103,10 @@ class BidBuy extends React.Component {
     })
       .then(response => response.json())
       .then(product => {
-        if (!product.error) {
-          this.setState({product});
+        if (product.error) {
+          throw product.message;
         }
+        this.setState({product});
       })
       .catch(console.log);
   }
@@ -131,8 +131,8 @@ class BidBuy extends React.Component {
       <Div>
         Product not found
         <Code>
-          id: {this.getId()} <br />
-          name: {this.getName()}
+          id: {this.getId() + ''} <br />
+          name: {this.getName() + ''}
         </Code>
       </Div>
     );
