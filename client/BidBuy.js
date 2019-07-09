@@ -48,7 +48,7 @@ class BidBuy extends React.Component {
   // For example, if the URL is http://localhost:3001/?id=103, `parseUrl()` returns
   // ['id', '103'],
   parseUrl() {
-    const params = window.location.href.split('?')[1];
+    const params = window.location.href.split('?')[1] || ''; // the default prevents an error when there's no '?'
     return params.split('=');
   }
 
