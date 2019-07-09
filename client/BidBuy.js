@@ -33,6 +33,7 @@ class BidBuy extends React.Component {
 
     this.getId = this.getId.bind(this);
     this.fetchItem = this.fetchItem.bind(this);
+    this.placeBid = this.placeBid.bind(this);
   }
 
   // The id of the current item is the number after '?' in the URL. For example,
@@ -48,6 +49,23 @@ class BidBuy extends React.Component {
       .catch(console.log);
   }
 
+  placeBid(bid) {
+    fetch(`http://localhost:3001/bid/${this.getId()}`, {
+      body: JSON.stringify({bid}),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'post'
+    })
+      .then(response => response.json())
+      .then(product => {
+        if (!product.error) {
+          this.setState({product});
+        }
+      })
+      .catch(console.log);
+  }
+
   componentDidMount() {
     this.fetchItem(this.getId());
   }
@@ -60,7 +78,7 @@ class BidBuy extends React.Component {
         <Heading>{product.name}</Heading>
         <Table>
           <TopInfo product={product} />
-          <BidInfo product={product} />
+          <BidInfo product={product} placeBid={this.placeBid} />
           <MiscInfo product={product} />
         </Table>
       </Div>

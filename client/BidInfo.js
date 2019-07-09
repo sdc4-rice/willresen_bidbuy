@@ -15,7 +15,6 @@ const Span = styled.span`
   color: #666;
 `;
 
-
 const BidButton = styled.button`
   background: #0068af;
   color: #fff
@@ -39,6 +38,23 @@ class BidInfo extends React.Component {
     this.state = {
       bid: ''
     };
+
+    this.handleFormChange = this.handleFormChange.bind(this);
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
+  }
+
+  handleFormChange(e) {
+    this.setState({
+      bid: e.target.value
+    });
+  }
+
+  handleFormSubmit(e) {
+    e.preventDefault();
+    this.props.placeBid(this.state.bid);
+    this.setState({
+      bid: ''
+    });
   }
 
   render() {
@@ -50,14 +66,19 @@ class BidInfo extends React.Component {
           <Td>Current Bid:</Td>
           <Td>
             US ${product.price.toFixed(2)}
-            <form>
-              <input type="text"></input> <br />
+            <form onSubmit={this.handleFormSubmit}>
+              <input
+                type="text"
+                name="bid"
+                value={this.state.bid}
+                onChange={this.handleFormChange}
+              ></input> <br />
               <Span>Enter US ${(product.price + 1).toFixed(2)} or more</Span>
             </form>
           </Td>
           <Td>
             [ <a>{product.bids} bids</a> ]
-            <BidButton>Place bid</BidButton>
+            <BidButton onClick={this.handleFormSubmit}>Place bid</BidButton>
           </Td>
         </MiddleRow>
       </tbody>
