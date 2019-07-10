@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<tbody>
+  <tr
+    className="sc-bwzfXH hynJvh"
+  >
+    <td
+      className="sc-bdVaJa bYMmDY"
+    >
+      Current Bid:
+    </td>
+    <td
+      className="sc-bdVaJa bYMmDY"
+    >
+      US $
+      564.00
+      <form
+        onSubmit={[Function]}
+      >
+        <input
+          name="bid"
+          onChange={[Function]}
+          type="text"
+          value=""
+        />
+         
+        <br />
+        <span
+          className="sc-htpNat eMRilx"
+        >
+          Enter US $
+          565.00
+           or more
+        </span>
+      </form>
+    </td>
+    <td
+      className="sc-bdVaJa bYMmDY"
+    >
+      [ 
+      <a>
+        37
+         bids
+      </a>
+       ]
+      <button
+        className="sc-bxivhb bLfBYJ"
+        onClick={[Function]}
+      >
+        Place bid
+      </button>
+    </td>
+  </tr>
+</tbody>
+`;
