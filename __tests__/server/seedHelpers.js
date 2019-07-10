@@ -1,6 +1,6 @@
-const db = require('./db.js');
-const { generateProduct, handleSeeding } = require('./seedHelpers.js');
-const Product = require('./model.js');
+const db = require('../../server/db.js');
+const { generateProduct, handleSeeding } = require('../../server/seedHelpers.js');
+const Product = require('../../server/model.js');
 
 beforeAll(() => {
   db.handleConnect();

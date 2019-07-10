@@ -1,7 +1,7 @@
 const rp = require('request-promise');
-const db = require('./db.js');
-const Product = require('./model.js');
-const { app } = require('./index.js');
+const db = require('../../server/db.js');
+const Product = require('../../server/model.js');
+const { app } = require('../../server/index.js');
 
 
 // `rpOptionsGet` and `rpOptionsPost` generate options objects for rp.
