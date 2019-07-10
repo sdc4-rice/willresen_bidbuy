@@ -33,6 +33,8 @@
   },
   "devDependencies": {
     "babel-jest": "^24.8.0",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
     "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
     "jest": "^24.8.0",
     "react-test-renderer": "^16.8.6",
@@ -47,6 +49,7 @@
   },
   "homepage": "https://github.com/fec4-gandolf/bid-buy#readme",
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": ["/node_modules/", "placeholderProduct"]
   }
 }
