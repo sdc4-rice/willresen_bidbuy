@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import BidBuy from '../../client/BidBuy.js';
+import BidBuy from '../../client/BidBuy';
 import { configure, shallow } from 'enzyme';
 import placeholderProduct from './placeholderProduct';
 import Adapter from 'enzyme-adapter-react-16';

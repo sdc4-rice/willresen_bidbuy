@@ -1,7 +1,7 @@
 import React from 'react';
-import BidInfo from '../../client/BidInfo.js';
+import BidInfo from '../../client/BidInfo';
 import renderer from 'react-test-renderer';
-import placeholderProduct from './placeholderProduct.js';
+import placeholderProduct from './placeholderProduct';
 
 it('renders correctly', () => {
   const tree = renderer

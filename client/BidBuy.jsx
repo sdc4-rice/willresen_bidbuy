@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import TopInfo from './TopInfo.js';
-import BidInfo from './BidInfo.js';
-import MiscInfo from './MiscInfo.js';
+import TopInfo from './TopInfo';
+import BidInfo from './BidInfo';
+import MiscInfo from './MiscInfo';
 
 const Code = styled.div`
   font-family: monospace;
