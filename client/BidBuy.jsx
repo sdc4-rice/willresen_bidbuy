@@ -33,7 +33,7 @@ class BidBuy extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      product: {price: 0}
+      product: { price: 0 },
     };
 
     this.parseUrl = this.parseUrl.bind(this);
@@ -44,12 +44,8 @@ class BidBuy extends React.Component {
     this.placeBid = this.placeBid.bind(this);
   }
 
-  // Returns an array consisting of the key value pair after the '?' in the URL.
-  // For example, if the URL is http://localhost:3001/?id=103, `parseUrl()` returns
-  // ['id', '103'],
-  parseUrl() {
-    const params = window.location.href.split('?')[1] || ''; // the default prevents an error when there's no '?'
-    return params.split('=');
+  componentDidMount() {
+    this.fetchItem();
   }
 
   // The id of the current item is the value of the 'id' parameter in the URL.
@@ -68,17 +64,25 @@ class BidBuy extends React.Component {
     return key === 'name' ? value : null;
   }
 
+  // Returns an array consisting of the key value pair after the '?' in the URL.
+  // For example, if the URL is http://localhost:3001/?id=103, `parseUrl()` returns
+  // ['id', '103'],
+  parseUrl() {
+    const params = window.location.href.split('?')[1] || ''; // the default prevents an error when there's no '?'
+    return params.split('=');
+  }
+
   fetchItemById(id) {
     fetch(`http://localhost:3001/items/id/${id}`)
       .then(response => response.json())
-      .then(product => this.setState({product}))
+      .then(product => this.setState({ product }))
       .catch(console.log);
   }
 
   fetchItemByName(name) {
     fetch(`http://localhost:3001/items/name/${name}`)
       .then(response => response.json())
-      .then(product => this.setState({product}))
+      .then(product => this.setState({ product }))
       .catch(console.log);
   }
 
@@ -95,28 +99,25 @@ class BidBuy extends React.Component {
 
   placeBid(bid) {
     fetch(`http://localhost:3001/bid/${this.state.product.id}`, {
-      body: JSON.stringify({bid}),
+      body: JSON.stringify({ bid }),
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      method: 'post'
+      method: 'post',
     })
       .then(response => response.json())
-      .then(product => {
+      .then((product) => {
         if (product.error) {
           throw product.message;
         }
-        this.setState({product});
+        this.setState({ product });
       })
       .catch(console.log);
   }
 
-  componentDidMount() {
-    this.fetchItem();
-  }
 
   render() {
-    const product = this.state.product;
+    const { product } = this.state;
 
     return product ? (
       <Div>
@@ -131,8 +132,9 @@ class BidBuy extends React.Component {
       <Div>
         Product not found
         <Code>
-          id: {this.getId() + ''} <br />
-          name: {this.getName() + ''}
+          {`id: ${this.getId() + ''}`}
+          <br />
+          {`name: ${this.getName() + ''}`}
         </Code>
       </Div>
     );

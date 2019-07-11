@@ -9,11 +9,15 @@ const Td = styled.td`
   padding: 1em;
 `;
 
-const MiscInfo = ({product}) => (
+const MiscInfo = ({ product }) => (
   <tbody>
     <BottomRow>
-      <Td>{product.watchers} watchers</Td>
-      <Td>Ships from {product.shippingCountry}</Td>
+      <Td>
+        {`${product.watchers} watchers`}
+      </Td>
+      <Td>
+        {`Ships from ${product.shippingCountry}`}
+      </Td>
       <Td>{product.returnsAllowed ? '30-day returns' : 'No returns'}</Td>
     </BottomRow>
   </tbody>

@@ -36,7 +36,7 @@ class BidInfo extends React.Component {
     super(props);
 
     this.state = {
-      bid: ''
+      bid: '',
     };
 
     this.handleFormChange = this.handleFormChange.bind(this);
@@ -45,7 +45,7 @@ class BidInfo extends React.Component {
 
   handleFormChange(e) {
     this.setState({
-      bid: e.target.value
+      bid: e.target.value,
     });
   }
 
@@ -53,12 +53,12 @@ class BidInfo extends React.Component {
     e.preventDefault();
     this.props.placeBid(this.state.bid);
     this.setState({
-      bid: ''
+      bid: '',
     });
   }
 
   render() {
-    const product = this.props.product;
+    const { product } = this.props;
 
     return (
       <tbody>
@@ -72,12 +72,15 @@ class BidInfo extends React.Component {
                 name="bid"
                 value={this.state.bid}
                 onChange={this.handleFormChange}
-              ></input> <br />
-              <Span>Enter US ${(product.price + 1).toFixed(2)} or more</Span>
+              />
+              <br />
+              <Span>
+                {`Enter US ${(product.price + 1).toFixed(2)} or more`}
+              </Span>
             </form>
           </Td>
           <Td>
-            [ <a>{product.bids} bids</a> ]
+            {`[ ${product.bids} bids ]`}
             <BidButton onClick={this.handleFormSubmit}>Place bid</BidButton>
           </Td>
         </MiddleRow>

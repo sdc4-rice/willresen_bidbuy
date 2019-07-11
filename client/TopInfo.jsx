@@ -19,7 +19,7 @@ const Span = styled.span`
   padding-left: 1em;
 `;
 
-const TopInfo = ({product}) => (
+const TopInfo = ({ product }) => (
   <tbody>
     <TopRow>
       <Td>Condition:</Td>
@@ -27,8 +27,12 @@ const TopInfo = ({product}) => (
     </TopRow>
     {product.sellerNote ? (
       <TopRow>
-        <Td></Td>
-        <SellerNote>"{product.sellerNote}"</SellerNote>
+        <Td />
+        <SellerNote>
+          &quot;
+          {product.sellerNote}
+          &quot;
+        </SellerNote>
       </TopRow>
     ) : null}
     <TopRow>
