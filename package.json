@@ -35,7 +35,11 @@
     "babel-jest": "^24.8.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
-    "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
+    "eslint": "^5.3.0",
+    "eslint-config-airbnb": "^17.1.1",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.2",
     "jest": "^24.8.0",
     "react-test-renderer": "^16.8.6",
     "request-promise": "^4.2.4"
@@ -50,6 +54,9 @@
   "homepage": "https://github.com/fec4-gandolf/bid-buy#readme",
   "jest": {
     "testEnvironment": "node",
-    "testPathIgnorePatterns": ["/node_modules/", "placeholderProduct"]
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "placeholderProduct"
+    ]
   }
 }
