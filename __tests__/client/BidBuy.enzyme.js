@@ -4,7 +4,7 @@
 
 import React from 'react';
 import BidBuy from '../../client/BidBuy.js';
-import { configure, mount } from 'enzyme';
+import { configure, shallow } from 'enzyme';
 import placeholderProduct from './placeholderProduct';
 import Adapter from 'enzyme-adapter-react-16';
 
@@ -20,12 +20,12 @@ describe('BidBuy component', () => {
 
   test('mounts correctly', () => {
     jest.spyOn(BidBuy.prototype, 'componentDidMount');
-    mount(<BidBuy />);
+    shallow(<BidBuy />);
     expect(BidBuy.prototype.componentDidMount).toHaveBeenCalled();
   });
 
   test('sets default state', () => {
-    const wrapper = mount(<BidBuy />);
+    const wrapper = shallow(<BidBuy />);
     expect(wrapper.state().product).toBeDefined();
   });
 });
