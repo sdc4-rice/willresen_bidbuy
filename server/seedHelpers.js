@@ -1,6 +1,6 @@
+const faker = require('faker');
 const db = require('./db.js');
 const Product = require('./model.js');
-const faker = require('faker');
 
 // HELPER FUNCTIONS
 const randomCondition = () => {
@@ -9,23 +9,17 @@ const randomCondition = () => {
 };
 
 // Roughly half the products should have notes from the seller
-const sellerNote = () => {
-  return Math.random() > 0.5 ? faker.lorem.sentence() : '';
-};
+const sellerNote = () => (Math.random() > 0.5 ? faker.lorem.sentence() : '');
 
 // Returns a URL-friendly version of the given string. For example,
 // 'John O'Riley' => 'john-oriley'.
 // This function helps produce names that can be used in API requests.
-const urlify = (string) => {
-  return string.toLowerCase()
-    .replace(/\s/g, '-')
-    .replace(/[^a-zA-Z\-\d]/g, ''); // strip out any character that is not a letter, digit, or hyphen
-};
+const urlify = string => string.toLowerCase()
+  .replace(/\s/g, '-')
+  .replace(/[^a-zA-Z\-\d]/g, ''); // strip out any character that is not a letter, digit, or hyphen
 
 // Roughly 80% of the products should be returnable
-const returnsAllowed = () => {
-  return Math.random() < 0.8;
-};
+const returnsAllowed = () => Math.random() < 0.8;
 
 // Returns an object representing a fake product
 const generateProduct = (id) => {
@@ -42,7 +36,7 @@ const generateProduct = (id) => {
     watchers: faker.random.number(75),
     bids: faker.random.number(50),
     shippingCountry: faker.address.country(),
-    returnsAllowed: returnsAllowed()
+    returnsAllowed: returnsAllowed(),
   };
 };
 
@@ -55,7 +49,7 @@ const seed = (startId, endId) => {
   console.log(`Adding items with ids ${startId} to ${endId}`);
 
   const fakeProducts = [];
-  for (let i = startId; i <= endId; i++) {
+  for (let i = startId; i <= endId; i += 1) {
     fakeProducts.push(generateProduct(i));
   }
 
@@ -68,19 +62,19 @@ const seed = (startId, endId) => {
 // it is done. You'll probably want to call this function instead of calling
 // `seed` directly.
 // Configure `startId` and `endId` defaults as desired.
-const handleSeeding = (startId = 100, endId = 110) => {
-  return db.handleConnect()
+const handleSeeding = (startId = 100, endId = 110) => (
+  db.handleConnect()
     .then(() => Product.collection.drop())
     .then(() => seed(startId, endId))
     .then(() => console.log('Database successfully seeded. Have a nice day.'))
-    .catch(err => {
+    .catch((err) => {
       console.log('Error seeding database:', err);
       throw err;
-    });
-};
+    })
+);
 
 module.exports = {
   generateProduct,
   seed,
-  handleSeeding
+  handleSeeding,
 };

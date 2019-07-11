@@ -3,12 +3,12 @@ const mongoose = require('mongoose');
 module.exports = mongoose.model('Product', {
   id: {
     type: Number,
-    unique: true
+    unique: true,
   },
   name: String,
   'url-name': {
     type: String,
-    unique: true
+    unique: true,
   },
   condition: String,
   price: Number,
@@ -17,5 +17,5 @@ module.exports = mongoose.model('Product', {
   watchers: Number,
   bids: Number,
   shippingCountry: String,
-  returnsAllowed: Boolean
+  returnsAllowed: Boolean,
 });
