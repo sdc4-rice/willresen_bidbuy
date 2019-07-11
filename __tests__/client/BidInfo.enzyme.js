@@ -1,6 +1,6 @@
 import React from 'react';
 import TopInfo from '../../client/TopInfo.js';
-import { shallow, configure, render } from 'enzyme';
+import { shallow, configure } from 'enzyme';
 import placeholderProduct from './placeholderProduct';
 import Adapter from 'enzyme-adapter-react-16';
 
