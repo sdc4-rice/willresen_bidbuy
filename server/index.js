@@ -48,7 +48,7 @@ app.post('/bid/:id', (req, res) => {
     .then(product => product.bids + 1)
     .then(bids => Product.findOneAndUpdate({ id }, { price: bid, bids }, { new: true }))
     .then(updatedProduct => res.json(updatedProduct))
-    .catch(err => res.json({ error: true, message: err }));
+    .catch(err => res.json({ error: true, message: err.message }));
 });
 
 app.listen(port, () => {
