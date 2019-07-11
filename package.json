@@ -8,12 +8,12 @@
     "node": ">=6.13.0"
   },
   "scripts": {
+    "build": "webpack -p",
+    "build:dev": "webpack -dw",
     "seed": "node server/seed.js",
-    "test": "jest",
     "start": "node server/index.js",
     "start:dev": "nodemon server/index.js",
-    "build": "webpack -p",
-    "build:dev": "webpack -dw"
+    "test": "jest"
   },
   "dependencies": {
     "@babel/core": "^7.5.0",
