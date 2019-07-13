@@ -1,0 +1,11 @@
+{
+  "parser": "babel-eslint",
+  "extends": ["airbnb"],
+  "rules": {
+    "no-undef": "off",
+    "prefer-template": "off",
+    "no-console": "off",
+    "react/forbid-prop-types": "off",
+    "react/jsx-one-expression-per-line": "off"
+  }
+}

@@ -1,6 +1,6 @@
-const db = require('./db.js');
-const { generateProduct, handleSeeding } = require('./seedHelpers.js');
-const Product = require('./model.js');
+const db = require('../../server/db.js');
+const { generateProduct, handleSeeding } = require('../../server/seedHelpers.js');
+const Product = require('../../server/model.js');
 
 beforeAll(() => {
   db.handleConnect();
@@ -35,18 +35,16 @@ describe('product generator', () => {
       watchers: expect.any(Number),
       bids: expect.any(Number),
       shippingCountry: expect.any(String),
-      returnsAllowed: expect.any(Boolean)
+      returnsAllowed: expect.any(Boolean),
     }));
   });
 });
 
 describe('seeder', () => {
-  beforeAll(() => {
-    return handleSeeding();
-  });
+  beforeAll(() => handleSeeding());
 
-  test('seeds database with multiple products', () => {
-    return Product.find()
-      .then(products => expect(products.length > 0).toBe(true));
-  });
+  test('seeds database with multiple products', () => (
+    Product.find()
+      .then(products => expect(products.length > 0).toBe(true))
+  ));
 });

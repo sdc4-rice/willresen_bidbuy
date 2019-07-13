@@ -1,10 +1,12 @@
 const express = require('express');
 const db = require('./db.js');
 const Product = require('./model.js');
+
 const port = 3001;
 const app = express();
 
 app.use(express.json());
+app.use(express.static('public'));
 db.handleConnect();
 
 app.get('/items', (req, res) => {
@@ -14,39 +16,39 @@ app.get('/items', (req, res) => {
 });
 
 app.get('/items/id/:id', (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
 
-  Product.findOne({id})
+  Product.findOne({ id })
     .then(product => res.json(product))
     .catch(err => res.json(err));
 });
 
 app.get('/items/name/:name', (req, res) => {
-  const name = req.params.name;
+  const { name } = req.params;
 
-  Product.findOne({'url-name': name})
+  Product.findOne({ 'url-name': name })
     .then(product => res.json(product))
     .catch(err => res.json(err));
 });
 
 app.post('/bid/:id', (req, res) => {
-  const id = req.params.id;
-  const bid = req.body.bid;
+  const { id } = req.params;
+  const { bid } = req.body;
 
   const validateBid = (price) => {
     if (price < bid) {
       return true;
     }
-    throw `Bid of $${bid} is not greater than $${price}.`;
+    throw Error(`Bid of $${bid} is not greater than $${price}.`);
   };
 
-  Product.findOne({id})
+  Product.findOne({ id })
     .then(product => product) // This shouldn't be necessary, but I get an error if I omit it
     .tap(product => validateBid(product.price))
     .then(product => product.bids + 1)
-    .then(bids => Product.findOneAndUpdate({id}, {price: bid, bids}, {new: true}))
+    .then(bids => Product.findOneAndUpdate({ id }, { price: bid, bids }, { new: true }))
     .then(updatedProduct => res.json(updatedProduct))
-    .catch(err => res.json({error: true, message: err}));
+    .catch(err => res.json({ error: true, message: err.message }));
 });
 
 app.listen(port, () => {
@@ -54,5 +56,5 @@ app.listen(port, () => {
 });
 
 module.exports = {
-  app
+  app,
 };

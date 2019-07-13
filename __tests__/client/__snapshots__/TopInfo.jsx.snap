@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<tbody>
+  <tr
+    className="sc-bwzfXH bFHdpU"
+  >
+    <td
+      className="sc-bdVaJa bYMmDY"
+    >
+      Condition:
+    </td>
+    <td
+      className="sc-bdVaJa bYMmDY"
+    >
+      <strong>
+        New
+      </strong>
+    </td>
+  </tr>
+  <tr
+    className="sc-bwzfXH bFHdpU"
+  >
+    <td
+      className="sc-bdVaJa bYMmDY"
+    />
+    <td
+      className="sc-htpNat bHpBdG"
+    >
+      "
+      Numquam eius laborum.
+      "
+    </td>
+  </tr>
+  <tr
+    className="sc-bwzfXH bFHdpU"
+  >
+    <td
+      className="sc-bdVaJa bYMmDY"
+    >
+      Time Left:
+    </td>
+    <td
+      className="sc-bdVaJa bYMmDY"
+    >
+      15 days
+      <span
+        className="sc-bxivhb dqInQj"
+      >
+        Sunday, 2:05PM
+      </span>
+    </td>
+  </tr>
+</tbody>
+`;
