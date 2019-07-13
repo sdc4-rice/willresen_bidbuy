@@ -65,6 +65,13 @@ const handleSeeding = (startId = 100, endId = 110) => {
 
   return db.handleConnect()
     .then(() => Product.collection.drop())
+    .catch((err) => {
+      if (err.code === 12587) {
+        return; // The collection doesn't exist, so it's OK that it wasn't dropped
+      }
+      console.log('Error dropping collection:', err);
+      throw err;
+    })
     .then(() => seed(startId, endId))
     .then(() => console.log('Database successfully seeded. Have a nice day.'))
     .catch((err) => {
