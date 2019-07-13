@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
-module.exports = mongoose.model('Product', {
+const { Schema } = mongoose;
+
+const productSchema = new Schema({
   id: {
     type: Number,
     unique: true,
@@ -19,3 +21,5 @@ module.exports = mongoose.model('Product', {
   shippingCountry: String,
   returnsAllowed: Boolean,
 });
+
+module.exports = mongoose.model('Product', productSchema);

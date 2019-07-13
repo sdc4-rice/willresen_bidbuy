@@ -1,7 +1,9 @@
+const process = require('process');
 const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
+require('dotenv').config();
 
-const database = 'products-bid-buy';
+const database = process.env.DB_NAME;
 
 const handleConnect = () => {
   if (mongoose.connection.readyState === 0) { // not connected to database
