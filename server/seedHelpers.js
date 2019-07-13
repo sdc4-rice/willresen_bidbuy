@@ -45,9 +45,6 @@ const generateProduct = (id) => {
 // returns a promise that resolves once all fake products have been added to the
 // database.
 const seed = (startId, endId) => {
-  console.log('Seeding database...');
-  console.log(`Adding items with ids ${startId} to ${endId}`);
-
   const fakeProducts = [];
   for (let i = startId; i <= endId; i += 1) {
     fakeProducts.push(generateProduct(i));
@@ -62,16 +59,19 @@ const seed = (startId, endId) => {
 // it is done. You'll probably want to call this function instead of calling
 // `seed` directly.
 // Configure `startId` and `endId` defaults as desired.
-const handleSeeding = (startId = 100, endId = 110) => (
-  db.handleConnect()
+const handleSeeding = (startId = 100, endId = 110) => {
+  console.log('Seeding database...');
+  console.log(`Adding items with ids ${startId} to ${endId}`);
+
+  return db.handleConnect()
     .then(() => Product.collection.drop())
     .then(() => seed(startId, endId))
     .then(() => console.log('Database successfully seeded. Have a nice day.'))
     .catch((err) => {
       console.log('Error seeding database:', err);
       throw err;
-    })
-);
+    });
+};
 
 module.exports = {
   generateProduct,
