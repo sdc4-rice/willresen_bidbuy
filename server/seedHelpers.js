@@ -1,6 +1,7 @@
 const faker = require('faker');
 const db = require('./db.js');
 const Product = require('./model.js');
+require('dotenv').config();
 
 // HELPER FUNCTIONS
 const randomCondition = () => {
@@ -58,8 +59,11 @@ const seed = (startId, endId) => {
 // database with new products, and finally logs a message to the console when
 // it is done. You'll probably want to call this function instead of calling
 // `seed` directly.
-// Configure `startId` and `endId` defaults as desired.
-const handleSeeding = (startId = 100, endId = 110) => {
+// Configure `startId` and `endId` via START_ID and END_ID environment variables.
+const handleSeeding = () => {
+  const startId = Number(process.env.START_ID) || 100;
+  const endId = Number(process.env.END_ID) || 200;
+
   console.log('Seeding database...');
   console.log(`Adding items with ids ${startId} to ${endId}`);
 

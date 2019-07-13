@@ -18,10 +18,12 @@ The bid-buy component of an eBay auction page.
 ## Setup
 
 1. Install npm packages: `npm install`
-2. Create an `.env` file in the root directory. This should specify values for both `PORT` and `DB_NAME`. I suggest the following:
+2. Create an `.env` file in the root directory. This should specify values for `PORT`, `DB_NAME`, `ID_START`, and `ID_END`. I suggest the following:
   ```
   PORT=3001
   DB_NAME=products-bid-buy
+  START_ID=100
+  END_ID=200
   ```
 3. Make sure you have MonogoDB installed and running.
 4. Seed: `npm run seed`
