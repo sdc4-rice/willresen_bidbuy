@@ -1,4 +1,9 @@
 {
   "parser": "babel-eslint",
-  "extends": ["airbnb"]
+  "extends": ["airbnb"],
+  "rules": {
+    "no-undef": "off",
+    "prefer-template": "off",
+    "no-console": "off"
+  }
 }
