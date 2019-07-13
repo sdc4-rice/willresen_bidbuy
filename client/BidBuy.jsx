@@ -29,6 +29,30 @@ const Heading = styled.h2`
   margin: 0;
 `;
 
+// Returns an array consisting of the key value pair after the '?' in the URL.
+// For example, if the URL is http://localhost:3001/?id=103, `parseUrl()` returns
+// ['id', '103'],
+const parseUrl = () => {
+  const params = window.location.href.split('?')[1] || ''; // the default prevents an error when there's no '?'
+  return params.split('=');
+};
+
+// The id of the current item is the value of the 'id' parameter in the URL.
+// For example, for the URL 'http://localhost:3001/?id=103', the id of the
+// current item is '103'.
+const getId = () => {
+  const [key, value] = parseUrl();
+  return key === 'id' ? value : null;
+};
+
+// The name of the current item is the value of the 'name' parameter in the
+// URL. For example, for the URL 'http://localhost:3001/?name=fantastic-concrete-fish',
+// the name of the current item is 'fantastic-concrete-fish'.
+const getName = () => {
+  const [key, value] = parseUrl();
+  return key === 'name' ? value : null;
+};
+
 class BidBuy extends React.Component {
   constructor(props) {
     super(props);
@@ -36,9 +60,6 @@ class BidBuy extends React.Component {
       product: { price: 0 },
     };
 
-    this.parseUrl = this.parseUrl.bind(this);
-    this.getId = this.getId.bind(this);
-    this.getName = this.getName.bind(this);
     this.fetchItemById = this.fetchItemById.bind(this);
     this.fetchItemByName = this.fetchItemByName.bind(this);
     this.placeBid = this.placeBid.bind(this);
@@ -46,30 +67,6 @@ class BidBuy extends React.Component {
 
   componentDidMount() {
     this.fetchItem();
-  }
-
-  // The id of the current item is the value of the 'id' parameter in the URL.
-  // For example, for the URL 'http://localhost:3001/?id=103', the id of the
-  // current item is '103'.
-  getId() {
-    const [key, value] = this.parseUrl();
-    return key === 'id' ? value : null;
-  }
-
-  // The name of the current item is the value of the 'name' parameter in the
-  // URL. For example, for the URL 'http://localhost:3001/?name=fantastic-concrete-fish',
-  // the name of the current item is 'fantastic-concrete-fish'.
-  getName() {
-    const [key, value] = this.parseUrl();
-    return key === 'name' ? value : null;
-  }
-
-  // Returns an array consisting of the key value pair after the '?' in the URL.
-  // For example, if the URL is http://localhost:3001/?id=103, `parseUrl()` returns
-  // ['id', '103'],
-  parseUrl() {
-    const params = window.location.href.split('?')[1] || ''; // the default prevents an error when there's no '?'
-    return params.split('=');
   }
 
   fetchItemById(id) {
@@ -87,8 +84,8 @@ class BidBuy extends React.Component {
   }
 
   fetchItem() {
-    const id = this.getId();
-    const name = this.getName();
+    const id = getId();
+    const name = getName();
 
     if (id) {
       this.fetchItemById(id);
@@ -98,7 +95,9 @@ class BidBuy extends React.Component {
   }
 
   placeBid(bid) {
-    fetch(`http://localhost:3001/bid/${this.state.product.id}`, {
+    const { product } = this.state;
+
+    fetch(`http://localhost:3001/bid/${product.id}`, {
       body: JSON.stringify({ bid }),
       headers: {
         'Content-Type': 'application/json',
@@ -106,11 +105,11 @@ class BidBuy extends React.Component {
       method: 'post',
     })
       .then(response => response.json())
-      .then((product) => {
-        if (product.error) {
-          throw product.message;
+      .then((newProduct) => {
+        if (newProduct.error) {
+          throw newProduct.message;
         }
-        this.setState({ product });
+        this.setState({ product: newProduct });
       })
       .catch(console.log);
   }
@@ -132,9 +131,9 @@ class BidBuy extends React.Component {
       <Div>
         Product not found
         <Code>
-          {`id: ${this.getId() + ''}`}
+          {`id: ${getId() + ''}`}
           <br />
-          {`name: ${this.getName() + ''}`}
+          {`name: ${getName() + ''}`}
         </Code>
       </Div>
     );
