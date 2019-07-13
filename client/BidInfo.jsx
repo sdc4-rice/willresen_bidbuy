@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Td = styled.td`
@@ -50,8 +51,11 @@ class BidInfo extends React.Component {
   }
 
   handleFormSubmit(e) {
+    const { placeBid } = this.props;
+    const { bid } = this.state;
+
     e.preventDefault();
-    this.props.placeBid(this.state.bid);
+    placeBid(bid);
     this.setState({
       bid: '',
     });
@@ -59,6 +63,7 @@ class BidInfo extends React.Component {
 
   render() {
     const { product } = this.props;
+    const { bid } = this.state;
 
     return (
       <tbody>
@@ -70,7 +75,7 @@ class BidInfo extends React.Component {
               <input
                 type="text"
                 name="bid"
-                value={this.state.bid}
+                value={bid}
                 onChange={this.handleFormChange}
               />
               <br />
@@ -88,5 +93,10 @@ class BidInfo extends React.Component {
     );
   }
 }
+
+BidInfo.propTypes = {
+  product: PropTypes.object.isRequired,
+  placeBid: PropTypes.func.isRequired,
+};
 
 export default BidInfo;

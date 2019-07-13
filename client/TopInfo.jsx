@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 
 const Td = styled.td`
   padding: 1em;
@@ -44,5 +45,9 @@ const TopInfo = ({ product }) => (
     </TopRow>
   </tbody>
 );
+
+TopInfo.propTypes = {
+  product: PropTypes.object.isRequired,
+};
 
 export default TopInfo;

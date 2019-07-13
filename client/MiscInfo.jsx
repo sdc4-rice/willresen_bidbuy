@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const BottomRow = styled.tr`
   text-align: center;
@@ -22,5 +23,9 @@ const MiscInfo = ({ product }) => (
     </BottomRow>
   </tbody>
 );
+
+MiscInfo.propTypes = {
+  product: PropTypes.object.isRequired,
+};
 
 export default MiscInfo;
