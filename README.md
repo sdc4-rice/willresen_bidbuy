@@ -10,31 +10,34 @@ The bid-buy component of an eBay auction page.
 
 ## Table of Contents
 
-1. [Usage](#Usage)
+1. [Setup](#setup)
+1. [Usage](#usage-local)
 1. [Requirements](#requirements)
 1. [Development](#development)
 
-## Usage
+## Setup
 
-First, make sure you have MongoDB installed and running.
+1. Install npm packages: `npm install`
+2. Create an `.env` file in the root directory. This should specify values for both `PORT` and `DB_NAME`. I suggest the following:
+  ```
+  PORT=3001
+  DB_NAME=products-bid-buy
+  ```
+3. Make sure you have MonogoDB installed and running.
+4. Seed: `npm run seed`
+5. Build: `npm run build`
+6. Start the server: `npm run start`
 
-Then seed the database: `npm run seed`
+## Usage (local)
+
+After the setup is complete, you can view a specific product at `http://localhost:<PORT>/?id=<ID>` or `http://localhost:<PORT>?name=<NAME>`.
+
+For example, if your server is running on port `3001`, you can view the product with id `103` at the following URL: `http://localhost:3001/?id=103`.
+
+If you fail to specify the id or name of a product, you will see a "Product not found" message.
 
 ## Requirements
 
-An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
-
-- Node 6.13.0
-- etc
+MongoDB
 
 ## Development
-
-### Installing Dependencies
-
-From within the root directory:
-
-```sh
-npm install -g webpack
-npm install
-```
-
