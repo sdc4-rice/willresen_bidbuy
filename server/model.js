@@ -1,6 +1,21 @@
 const mongoose = require('mongoose');
 
 module.exports = mongoose.model('Product', {
+  id: Number,
+  name: String,
+  'url-name': String,
+  condition: String,
+  price: Number,
+  sellerNote: String,
+  expiresAt: Date,
+  watchers: Number,
+  bids: Number,
+  shippingCountry: String,
+  returnsAllowed: Boolean,
+});
+
+/*
+module.exports = mongoose.model('Product', {
   id: {
     type: Number,
     unique: true,
@@ -19,3 +34,4 @@ module.exports = mongoose.model('Product', {
   shippingCountry: String,
   returnsAllowed: Boolean,
 });
+*/
