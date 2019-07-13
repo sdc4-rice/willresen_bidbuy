@@ -30,7 +30,8 @@
     "react-dom": "^16.8.6",
     "styled-components": "^4.3.2",
     "webpack": "^4.35.2",
-    "webpack-cli": "^3.3.5"
+    "webpack-cli": "^3.3.5",
+    "lodash": ">=4.17.13"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.2",
