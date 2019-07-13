@@ -1,8 +1,10 @@
 const express = require('express');
+const process = require('process');
 const db = require('./db.js');
 const Product = require('./model.js');
+require('dotenv').config();
 
-const port = 3001;
+const port = process.env.PORT;
 const app = express();
 
 app.use(express.json());
