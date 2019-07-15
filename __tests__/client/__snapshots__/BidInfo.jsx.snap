@@ -28,7 +28,7 @@ exports[`renders correctly 1`] = `
         <span
           className="sc-htpNat eMRilx"
         >
-          Enter US 565.00 or more
+          Enter US $565.00 or more
         </span>
       </form>
     </td>

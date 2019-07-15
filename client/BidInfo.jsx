@@ -80,7 +80,7 @@ class BidInfo extends React.Component {
               />
               <br />
               <Span>
-                {`Enter US ${(product.price + 1).toFixed(2)} or more`}
+                {`Enter US $${(product.price + 1).toFixed(2)} or more`}
               </Span>
             </form>
           </Td>
