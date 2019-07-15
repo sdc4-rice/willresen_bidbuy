@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const process = require('process');
 const db = require('./db.js');
 const Product = require('./model.js');
@@ -9,6 +10,7 @@ const app = express();
 
 app.use(express.json());
 app.use(express.static('public'));
+app.use(cors());
 db.handleConnect();
 
 app.get('/items', (req, res) => {
