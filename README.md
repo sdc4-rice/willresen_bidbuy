@@ -18,7 +18,7 @@ The bid-buy component of an eBay auction page.
 ## Setup
 
 1. Install npm packages: `npm install`
-2. Create an `.env` file in the root directory. This should specify values for `PORT`, `DB_NAME`, `ID_START`, and `ID_END`. I suggest the following:
+2. Create an `.env` file in the root directory. This should specify values for `PORT`, `DB_NAME`, `START_ID`, and `END_ID`. I suggest the following:
   ```
   PORT=3001
   DB_NAME=products-bid-buy
@@ -37,6 +37,8 @@ After the setup is complete, you can view a specific product at `http://localhos
 For example, if your server is running on port `3001`, you can view the product with id `103` at the following URL: `http://localhost:3001/?id=103`.
 
 If you fail to specify the id or name of a product, you will see a "Product not found" message.
+
+The bundle is located at `http://localhost:<PORT>/bundle.js`.
 
 ## Requirements
 
