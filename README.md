@@ -38,10 +38,8 @@ For example, if your server is running on port `3001`, you can view the product 
 
 If you fail to specify the id or name of a product, you will see a "Product not found" message.
 
-The bundle is located at `http://localhost:<PORT>/bundle.js`.
+The bundle is located at `http://localhost:<PORT>/bundle.js`. It will automatically mount the React component to an element with id the `bid-buy`.
 
 ## Requirements
 
 MongoDB
-
-## Development
