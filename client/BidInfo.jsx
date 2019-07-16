@@ -36,6 +36,8 @@ const BidButton = styled.button`
 const BidInput = styled.input`
   font-size: 14pt;
   width: 150px;
+  display: inline-block;
+  margin-bottom: 0.2em;
 `;
 
 const CurrentBid = styled.span`
