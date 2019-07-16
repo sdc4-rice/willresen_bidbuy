@@ -9,6 +9,7 @@ const Td = styled.td`
 const MiddleRow = styled.tr`
   background: #e2e2e2;
   vertical-align: top;
+  border: 3px solid #e2e2e2;
 `;
 
 const Span = styled.span`
