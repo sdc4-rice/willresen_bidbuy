@@ -8,6 +8,7 @@ const BottomRow = styled.tr`
 
 const Td = styled.td`
   padding: 1em;
+  border: 1px solid #e2e2e2;
 `;
 
 const MiscInfo = ({ product }) => (

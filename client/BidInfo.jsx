@@ -9,6 +9,7 @@ const Td = styled.td`
 const MiddleRow = styled.tr`
   background: #e2e2e2;
   vertical-align: top;
+  border: 3px solid #e2e2e2;
 `;
 
 const Span = styled.span`
@@ -30,6 +31,20 @@ const BidButton = styled.button`
     position: relative;
     top: 1px;
   }
+`;
+
+const BidInput = styled.input`
+  font-size: 14pt;
+  width: 150px;
+  display: inline-block;
+  margin-bottom: 0.2em;
+`;
+
+const CurrentBid = styled.span`
+  font-weight: bold;
+  font-size: 13pt;
+  margin-bottom: 0.5em;
+  display: inline-block;
 `;
 
 class BidInfo extends React.Component {
@@ -70,9 +85,11 @@ class BidInfo extends React.Component {
         <MiddleRow>
           <Td>Current Bid:</Td>
           <Td>
-            US ${product.price.toFixed(2)}
+            <CurrentBid>
+              US ${product.price.toFixed(2)}
+            </CurrentBid>
             <form onSubmit={this.handleFormSubmit}>
-              <input
+              <BidInput
                 type="text"
                 name="bid"
                 value={bid}

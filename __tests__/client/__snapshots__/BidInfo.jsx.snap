@@ -3,7 +3,7 @@
 exports[`renders correctly 1`] = `
 <tbody>
   <tr
-    className="sc-bwzfXH hynJvh"
+    className="sc-bwzfXH bKsVWG"
   >
     <td
       className="sc-bdVaJa bYMmDY"
@@ -13,12 +13,17 @@ exports[`renders correctly 1`] = `
     <td
       className="sc-bdVaJa bYMmDY"
     >
-      US $
-      564.00
+      <span
+        className="sc-EHOje jnuSEb"
+      >
+        US $
+        564.00
+      </span>
       <form
         onSubmit={[Function]}
       >
         <input
+          className="sc-ifAKCX KfyxJ"
           name="bid"
           onChange={[Function]}
           type="text"
