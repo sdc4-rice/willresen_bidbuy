@@ -33,6 +33,18 @@ const BidButton = styled.button`
   }
 `;
 
+const BidInput = styled.input`
+  font-size: 14pt;
+  width: 150px;
+`;
+
+const CurrentBid = styled.span`
+  font-weight: bold;
+  font-size: 13pt;
+  margin-bottom: 0.5em;
+  display: inline-block;
+`;
+
 class BidInfo extends React.Component {
   constructor(props) {
     super(props);
@@ -71,9 +83,11 @@ class BidInfo extends React.Component {
         <MiddleRow>
           <Td>Current Bid:</Td>
           <Td>
-            US ${product.price.toFixed(2)}
+            <CurrentBid>
+              US ${product.price.toFixed(2)}
+            </CurrentBid>
             <form onSubmit={this.handleFormSubmit}>
-              <input
+              <BidInput
                 type="text"
                 name="bid"
                 value={bid}
