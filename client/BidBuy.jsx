@@ -4,6 +4,10 @@ import TopInfo from './TopInfo';
 import BidInfo from './BidInfo';
 import MiscInfo from './MiscInfo';
 
+// Change this if you aren't using port 3001, or aren't running
+// on `localhost`.
+const hostURL = 'http://localhost:3001';
+
 const Code = styled.div`
   font-family: monospace;
   margin: 1em;
@@ -30,7 +34,7 @@ const Heading = styled.h2`
 `;
 
 // Returns an array consisting of the key value pair after the '?' in the URL.
-// For example, if the URL is http://localhost:3001/?id=103, `parseUrl()` returns
+// For example, if the URL is ${hostURL}/?id=103, `parseUrl()` returns
 // ['id', '103'],
 const parseUrl = () => {
   const params = window.location.href.split('?')[1] || ''; // the default prevents an error when there's no '?'
@@ -38,7 +42,7 @@ const parseUrl = () => {
 };
 
 // The id of the current item is the value of the 'id' parameter in the URL.
-// For example, for the URL 'http://localhost:3001/?id=103', the id of the
+// For example, for the URL '${hostURL}/?id=103', the id of the
 // current item is '103'.
 const getId = () => {
   const [key, value] = parseUrl();
@@ -46,7 +50,7 @@ const getId = () => {
 };
 
 // The name of the current item is the value of the 'name' parameter in the
-// URL. For example, for the URL 'http://localhost:3001/?name=fantastic-concrete-fish',
+// URL. For example, for the URL '${hostURL}/?name=fantastic-concrete-fish',
 // the name of the current item is 'fantastic-concrete-fish'.
 const getName = () => {
   const [key, value] = parseUrl();
@@ -70,14 +74,14 @@ class BidBuy extends React.Component {
   }
 
   fetchItemById(id) {
-    fetch(`http://localhost:3001/items/id/${id}`)
+    fetch(`${hostURL}/items/id/${id}`)
       .then(response => response.json())
       .then(product => this.setState({ product }))
       .catch(console.log);
   }
 
   fetchItemByName(name) {
-    fetch(`http://localhost:3001/items/name/${name}`)
+    fetch(`${hostURL}/items/name/${name}`)
       .then(response => response.json())
       .then(product => this.setState({ product }))
       .catch(console.log);
@@ -97,7 +101,7 @@ class BidBuy extends React.Component {
   placeBid(bid) {
     const { product } = this.state;
 
-    fetch(`http://localhost:3001/bid/${product.id}`, {
+    fetch(`${hostURL}/bid/${product.id}`, {
       body: JSON.stringify({ bid }),
       headers: {
         'Content-Type': 'application/json',
