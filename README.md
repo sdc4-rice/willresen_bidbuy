@@ -32,6 +32,8 @@ The bid-buy component of an eBay auction page.
 5. Build: `npm run build`
 6. Start the server: `npm run start`
 
+Note that if you specify a port other than 3001, then you must change `hostURL` in `BidBuy.jsx` accordingly.
+
 ## Setup (with Docker)
 
 1. Create an `.env` file, as in step 2 above. Here `DB_HOST` should be 'mongo' and not 'localhost'.
