@@ -18,10 +18,11 @@ The bid-buy component of an eBay auction page.
 ## Setup
 
 1. Install npm packages: `npm install`
-2. Create an `.env` file in the root directory. This should specify values for `PORT`, `DB_NAME`, `START_ID`, and `END_ID`. I suggest the following:
+2. Create an `.env` file in the root directory. This should specify values for `PORT`, `DB_NAME`, `DB_HOST`, `START_ID`, and `END_ID`. I suggest the following:
   ```
   PORT=3001
   DB_NAME=products-bid-buy
+  DB_HOST=localhost
   START_ID=100
   END_ID=200
   ```
