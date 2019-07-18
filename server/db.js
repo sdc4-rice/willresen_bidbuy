@@ -5,9 +5,11 @@ require('dotenv').config();
 
 const database = process.env.DB_NAME;
 
+// TODO: read DB host in from environment variable
+
 const handleConnect = () => {
   if (mongoose.connection.readyState === 0) { // not connected to database
-    return mongoose.connect(`mongodb://localhost:27017/${database}`, { useNewUrlParser: true, useCreateIndex: true });
+    return mongoose.connect(`mongodb://mongo:27017/${database}`, { useNewUrlParser: true, useCreateIndex: true });
   }
   return Promise.resolve(false); // already connected
 };
