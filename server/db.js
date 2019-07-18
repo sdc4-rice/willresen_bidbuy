@@ -14,7 +14,7 @@ const handleConnect = () => {
 };
 
 module.exports = {
-  database,
+  databaseName,
   mongoose,
   handleConnect,
 };
