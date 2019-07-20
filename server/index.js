@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const process = require('process');
 const db = require('./db.js');
 const Product = require('./model.js');
 require('dotenv').config();
