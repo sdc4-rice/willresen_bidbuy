@@ -27,16 +27,16 @@ The bid-buy component of an eBay auction page.
   START_ID=100
   END_ID=200
   ```
-3. Make sure you have MonogoDB installed and running.
-4. Seed: `npm run seed`
-5. Build: `npm run build`
-6. Start the server: `npm run start`
-
-Note that if you specify a port other than 3001, then you must change `hostURL` in `BidBuy.jsx` accordingly.
+3. If you are running the module locally, change `hostURL` in `BidBuy.jsx` to `http://localhost:<PORT>`.
+4. Make sure you have MonogoDB installed and running.
+5. Seed: `npm run seed`
+6. Build: `npm run build`
+7. Start the server: `npm run start`
 
 ## Setup (with Docker)
 
 1. Create an `.env` file, as in step 2 above. Here `DB_HOST` should be 'mongo' and not 'localhost'.
+2. If you are running the module locally, change `hostURL` in `BidBuy.jsx` to `http://localhost:<PORT>`.
 2. Make sure you have Docker installed and running.
 3. Run `docker-compose up` from the root directory to start the app.
 4. When you're done, run `docker-compose down` from the root directory to stop the app.
