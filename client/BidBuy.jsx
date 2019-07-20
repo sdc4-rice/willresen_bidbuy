@@ -4,9 +4,11 @@ import TopInfo from './TopInfo';
 import BidInfo from './BidInfo';
 import MiscInfo from './MiscInfo';
 
-// Change this if you aren't using port 3001, or aren't running
-// on `localhost`.
-const hostURL = 'http://localhost:3001';
+// Change this to 'http://localhost:<PORT>' if you are running the module on a
+// local machine. The following URL is to the deployed module on EC2.
+// You can also change it to an empty string. This will break the proxy, but
+// the module will work if it is loaded by itself.
+const hostURL = 'http://18.213.115.247';
 
 const Code = styled.div`
   font-family: monospace;
