@@ -1,4 +1,3 @@
-const process = require('process');
 const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 require('dotenv').config();
