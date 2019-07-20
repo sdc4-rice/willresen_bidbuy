@@ -3,10 +3,12 @@ services:
   app:
     container_name: docker-express-mongo
     restart: always
-    build: .
+    image: tf03/bid-buy
     ports:
       - ${PORT}:3001
     depends_on:
+      - mongo
+    links:
       - mongo
   mongo:
     container_name: mongo
