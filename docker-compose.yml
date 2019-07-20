@@ -1,17 +1,14 @@
-version: '3'
+version: '2'
 services:
   app:
-    container_name: docker-express-mongo
-    restart: always
-    build: .
+    # If you're running on your local machine and not deploying,
+    # change the following line to 'build: .'
+    image: tf03/bid-buy
     ports:
-      - ${PORT}:3001
-    depends_on:
-      - mongo
+      - '3001:3001'
     links:
       - mongo
   mongo:
-    container_name: mongo
     image: mongo
     ports:
       - '27017:27017'
