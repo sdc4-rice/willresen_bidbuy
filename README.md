@@ -31,7 +31,7 @@ The bid-buy component of an eBay auction page.
 4. Make sure you have MonogoDB installed and running.
 5. Seed: `npm run seed`
 6. Build: `npm run build`
-7. Start the server: `npm run start`
+7. Start the server: `npm start`
 
 ## Setup (with Docker)
 
