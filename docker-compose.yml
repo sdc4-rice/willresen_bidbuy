@@ -3,7 +3,7 @@ services:
   app:
     container_name: docker-express-mongo
     restart: always
-    image: tf03/bid-buy
+    build: .
     ports:
       - ${PORT}:3001
     depends_on:
