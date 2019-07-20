@@ -1,0 +1,17 @@
+version: '3'
+services:
+  app:
+    container_name: docker-express-mongo
+    restart: always
+    image: tf03/bid-buy
+    ports:
+      - ${PORT}:3001
+    depends_on:
+      - mongo
+    links:
+      - mongo
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+      - '27017:27017'

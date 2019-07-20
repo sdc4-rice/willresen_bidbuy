@@ -10,18 +10,20 @@ The bid-buy component of an eBay auction page.
 
 ## Table of Contents
 
-1. [Setup](#setup)
+1. [Setup (without docker)](#setup-without-docker)
+1. [Setup (with docker)](#setup-with-docker)
 1. [Usage](#usage-local)
 1. [Requirements](#requirements)
 1. [Development](#development)
 
-## Setup
+## Setup (without Docker)
 
 1. Install npm packages: `npm install`
-2. Create an `.env` file in the root directory. This should specify values for `PORT`, `DB_NAME`, `START_ID`, and `END_ID`. I suggest the following:
+2. Create an `.env` file in the root directory. This should specify values for `PORT`, `DB_NAME`, `DB_HOST`, `START_ID`, and `END_ID`. I suggest the following:
   ```
   PORT=3001
   DB_NAME=products-bid-buy
+  DB_HOST=localhost
   START_ID=100
   END_ID=200
   ```
@@ -29,6 +31,15 @@ The bid-buy component of an eBay auction page.
 4. Seed: `npm run seed`
 5. Build: `npm run build`
 6. Start the server: `npm run start`
+
+Note that if you specify a port other than 3001, then you must change `hostURL` in `BidBuy.jsx` accordingly.
+
+## Setup (with Docker)
+
+1. Create an `.env` file, as in step 2 above. Here `DB_HOST` should be 'mongo' and not 'localhost'.
+2. Make sure you have Docker installed and running.
+3. Run `docker-compose up` from the root directory to start the app.
+4. When you're done, run `docker-compose down` from the root directory to stop the app.
 
 ## Usage (local)
 
