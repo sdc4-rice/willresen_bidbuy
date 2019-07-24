@@ -37,10 +37,10 @@ app.post('/bid/:id', (req, res) => {
 
   // find a product by id
   db.getById(id)
-    .tap(results => validateBid(results))
-    .then(item => item.bids + 1)
-    .then(bid => db.updateItem(id, bid.bids, bid.price))
-    .then(updatedItem => res.json(updatedItem))
+    .tap(results => validateBid(results.price))
+    .tap(item => item.bids += 1)
+    .then(item => db.updateItem(id, item.bids, parseFloat(bid)))
+    .then(updatedItem => res.json(updatedItem[1][0]))
     .catch(err => res.json({ error: true, message: err.message }));
 });
 
