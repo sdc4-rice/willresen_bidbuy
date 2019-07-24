@@ -36,13 +36,12 @@ app.post('/bid/:id', (req, res) => {
   };
 
   // find a product by id
-  // validate that its current price < bid price
-  // if it is, add one to the number of bids. if not, make sure to use .catch
-          // and send "res.json({ error: true, message: err.message });"
-
-  // update the database entry with new number of bids and new price
-  // return updated database entry to client
-
+  db.getById(id)
+    .tap(results => validateBid(results))
+    .then(item => item.bids + 1)
+    .then(bid => db.updateItem(id, bid.bids, bid.price))
+    .then(updatedItem => res.json(updatedItem))
+    .catch(err => res.json({ error: true, message: err.message }));
 });
 
 app.listen(port, () => {
