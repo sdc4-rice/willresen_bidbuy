@@ -1,6 +1,5 @@
 const faker = require('faker');
 const db = require('./db.js');
-const Product = require('./model.js');
 require('dotenv').config();
 
 // HELPER FUNCTIONS
@@ -45,14 +44,11 @@ const generateProduct = (id) => {
 // This function generates fake products and adds them to the database. It
 // returns a promise that resolves once all fake products have been added to the
 // database.
-const seed = (startId, endId) => {
+const seed = async (startId, endId) => {
   const fakeProducts = [];
   for (let i = startId; i <= endId; i += 1) {
-    fakeProducts.push(generateProduct(i));
+    await db.Item.create(generateProduct(i));
   }
-
-  return db.handleConnect()
-    .then(() => Product.insertMany(fakeProducts));
 };
 
 // This function drops the existing collection, runs `seed` to seed the
@@ -67,8 +63,8 @@ const handleSeeding = () => {
   console.log('Seeding database...');
   console.log(`Adding items with ids ${startId} to ${endId}`);
 
-  return db.handleConnect()
-    .then(() => Product.collection.drop())
+  return db.sequelize.authenticate()
+    .then(() => db.sequelize.sync({force: true}))
     .catch((err) => {
       if (err.code === 12587) {
         return; // The collection doesn't exist, so it's OK that it wasn't dropped
