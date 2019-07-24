@@ -24,11 +24,11 @@ Item.init({
 
 
 const getById = (id) => {
-  return Item.findOne({ where: { id: id } });
+  return Item.findOne({ raw: true, where: { id: id } });
 };
 
 const getByName = (name) => {
-  return Item.findOne({ where: { name: name } });
+  return Item.findOne({ raw: true, where: { name: name } });
 };
 
 const updateItem = (id, bids, price) => {
@@ -38,10 +38,9 @@ const updateItem = (id, bids, price) => {
   }, {
       where: {
         id: id
-      }
-    }, {
+      },
       returning: true,
-      plain: true
+      raw: true
     });
 };
 
@@ -49,6 +48,7 @@ const updateItem = (id, bids, price) => {
 module.exports = {
   getById,
   getByName,
+  updateItem,
   sequelize,
   Item
 };
