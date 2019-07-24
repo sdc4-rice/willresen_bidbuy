@@ -29,7 +29,7 @@ const generateProduct = (id) => {
   return {
     id,
     name,
-    'url-name': urlify(name),
+    url: urlify(name),
     condition: randomCondition(),
     price: parseFloat(faker.commerce.price()),
     sellerNote: sellerNote(),
