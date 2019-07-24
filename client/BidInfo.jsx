@@ -86,7 +86,7 @@ class BidInfo extends React.Component {
           <Td>Current Bid:</Td>
           <Td>
             <CurrentBid>
-              US ${product.price.toFixed(2)}
+              US ${parseFloat(product.price).toFixed(2)}
             </CurrentBid>
             <form onSubmit={this.handleFormSubmit}>
               <BidInput
@@ -97,7 +97,7 @@ class BidInfo extends React.Component {
               />
               <br />
               <Span>
-                {`Enter US $${(product.price + 1).toFixed(2)} or more`}
+                {`Enter US $${(parseFloat(product.price) + 1).toFixed(2)} or more`}
               </Span>
             </form>
           </Td>
