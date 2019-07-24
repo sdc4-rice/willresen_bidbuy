@@ -16,23 +16,39 @@ Item.init({
   price: Sequelize.DECIMAL,
   sellerNote: Sequelize.STRING,
   expiresAt: Sequelize.DATE,
-  watchers: Sequelize.DECIMAL,
-  bids: Sequelize.DECIMAL,
+  watchers: Sequelize.INTEGER,
+  bids: Sequelize.INTEGER,
   shippingCountry: Sequelize.STRING,
   returnsAllowed: Sequelize.BOOLEAN,
 }, { sequelize, modelName: 'item' });
 
 
-  const getById = (id) => {
-    return Item.findOne({where: {id: id}});
-  };
+const getById = (id) => {
+  return Item.findOne({ where: { id: id } });
+};
 
-  const getByName = (name) => {
-    return Item.findOne({where: {name: name}});
-  };
+const getByName = (name) => {
+  return Item.findOne({ where: { name: name } });
+};
+
+const updateItem = (id, bids, price) => {
+  return Item.update({
+    bids: bids,
+    price: price
+  }, {
+      where: {
+        id: id
+      }
+    }, {
+      returning: true,
+      plain: true
+    });
+};
 
 
 module.exports = {
   getById,
-  getByName
+  getByName,
+  sequelize,
+  Item
 };
