@@ -8,7 +8,7 @@ import MiscInfo from './MiscInfo';
 // local machine. The following URL is to the deployed module on EC2.
 // You can also change it to an empty string. This will break the proxy, but
 // the module will work if it is loaded by itself.
-const hostURL = 'http://18.213.115.247';
+const hostURL = 'http://localhost:3001';
 
 const Code = styled.div`
   font-family: monospace;

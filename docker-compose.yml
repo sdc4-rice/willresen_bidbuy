@@ -3,7 +3,7 @@ services:
   app:
     # If you're running on your local machine and not deploying,
     # change the following line to 'build: .'
-    image: tf03/bid-buy
+    build: .
     ports:
       - '3001:3001'
     links:
