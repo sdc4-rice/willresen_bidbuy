@@ -46,15 +46,14 @@ const generateProduct = (id) => {
 // database.
 const seed = async (startId, endId) => {
   let fakeProducts = [];
-  for (let i = startId; i <= endId; i += 1) {
+  for (let i = startId; i <= endId; i++) {
     fakeProducts.push(generateProduct(i));
-    if (fakeProducts.length >= 100000) {
+    if (i % 50000 === 0) {
       await db.Item.bulkCreate(fakeProducts);
       fakeProducts = [];
     }
   }
   await db.Item.bulkCreate(fakeProducts);
-    console.log(fakeProducts);
 };
 
 // This function drops the existing collection, runs `seed` to seed the
