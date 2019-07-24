@@ -36,9 +36,3 @@ module.exports = {
   getById,
   getByName
 };
-
-// module.exports = {
-//   databaseName,
-//   mongoose,
-//   handleConnect,
-// };
