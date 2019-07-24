@@ -10,22 +10,18 @@ app.use(express.json());
 app.use(express.static('public'));
 app.use(cors());
 
-//retrieve all products from database
-app.get('/items', (req, res) => {
-
-});
-
 //find product by id
 app.get('/items/id/:id', (req, res) => {
-  const { id } = req.params;
-
+  db.getById(req.params.id)
+    .then(results => res.send(results))
+    .catch(err => console.log(err));
 });
 
  //find product by name
 app.get('/items/name/:name', (req, res) => {
-  const { name } = req.params;
-
-
+  db.getByName(req.params.name)
+  .then(results => res.send(results))
+  .catch(err => console.log(err));
 });
 
 app.post('/bid/:id', (req, res) => {
