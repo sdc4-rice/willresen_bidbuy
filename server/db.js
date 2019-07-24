@@ -3,9 +3,9 @@ const Sequelize = require('sequelize');
 const sequelize = new Sequelize('postgres://postgres@localhost:5432/bidbuy');
 const Model = Sequelize.Model;
 
-class Product extends Model {};
+class Item extends Model {};
 
-Product.init({
+Item.init({
   id: {
     type: Sequelize.DECIMAL,
     primaryKey: true,
@@ -20,28 +20,22 @@ Product.init({
   bids: Sequelize.DECIMAL,
   shippingCountry: Sequelize.STRING,
   returnsAllowed: Sequelize.BOOLEAN,
-}, { sequelize, modelName: 'product' });
+}, { sequelize, modelName: 'item' });
 
 
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log('Connection has been established successfully.');
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
-  });
+  const getById = (id) => {
+    return Item.findOne({where: {id: id}});
+  };
+
+  const getByName = (name) => {
+    return Item.findOne({where: {name: name}});
+  };
 
 
-
-
-
-
-
-
-
-
-
+module.exports = {
+  getById,
+  getByName
+};
 
 // module.exports = {
 //   databaseName,
