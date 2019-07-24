@@ -66,9 +66,6 @@ const handleSeeding = () => {
   return db.sequelize.authenticate()
     .then(() => db.sequelize.sync({force: true}))
     .catch((err) => {
-      if (err.code === 12587) {
-        return; // The collection doesn't exist, so it's OK that it wasn't dropped
-      }
       console.log('Error dropping collection:', err);
       throw err;
     })
