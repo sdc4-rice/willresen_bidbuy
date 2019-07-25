@@ -31,17 +31,10 @@ app.post('/items', (req, res) => {
     .catch(err => console.log(err));
 });
 
-//update a listing in the database
-app.put('/items/id/:id', (req, res) => {
-  db.updateItem(req.body)
-  .then(results => res.send(results))
-  .catch(err => console.log(err));
-})
-
 //remove a listing from the database
 app.delete('/items/id/:id', (req, res) => {
   db.deleteItem(req.params.id)
-    .then(results => res.send(results))
+    .then(results => res.sendStatus(200))
     .catch(err => console.log(err))
 });
 
