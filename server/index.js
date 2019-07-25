@@ -14,28 +14,24 @@ app.use(cors());
 app.get('/items/id/:id', (req, res) => {
   db.getById(req.params.id)
     .then(results => res.send(results))
-    .catch(err => console.log(err));
 });
 
  //find product by name
 app.get('/items/name/:name', (req, res) => {
   db.getByName(req.params.name)
   .then(results => res.send(results))
-  .catch(err => console.log(err));
 });
 
 //add a listing to the database
 app.post('/items', (req, res) => {
   db.addItem(req.body)
     .then(results => res.send(results))
-    .catch(err => console.log(err));
 });
 
 //remove a listing from the database
 app.delete('/items/id/:id', (req, res) => {
   db.deleteItem(req.params.id)
     .then(results => res.sendStatus(200))
-    .catch(err => console.log(err))
 });
 
 //post a bid to a listing
