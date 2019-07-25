@@ -56,7 +56,10 @@ The bundle is located at `http://localhost:<PORT>/bundle.js`. It will automatica
 
 ## API Endpoints
 <pre>
-GET:   /items/id/:id          -->        Retrieves an item by its ID.
-GET:   /items/name/:name      -->        Retrieves an item by its name.
-POST:  /bid/:bid              -->        Verifies and places a bid on the current item.
+GET:      /items/id/:id          -->        Retrieves an item listing by its ID.
+GET:      /items/name/:name      -->        Retrieves an item listing by its name.
+POST:     /bid/:bid              -->        Verifies and places a bid on the current item listing.
+POST:     /items/                -->        Add a new item listing.
+PUT:      /items/id/:id          -->        Updates an item listing.
+DELETE:   /items/id/:id          -->        Removes an item listing.
 </pre>
