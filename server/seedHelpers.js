@@ -44,15 +44,19 @@ const generateProduct = () => {
 // returns a promise that resolves once all fake products have been added to the
 // database.
 const seed = async (startId, endId) => {
-  let fakeProducts = [];
-  for (let i = startId; i <= endId; i++) {
-    fakeProducts.push(generateProduct());
-    if (i % 50000 === 0) {
-      await db.Item.bulkCreate(fakeProducts);
-      fakeProducts = [];
+  const loop = async (start, ending) => {
+    if (ending === 0) {
+      return Promise.resolve(true);
     }
+    let end = ending > 50000 ? 50000 : ending
+    let fakeProducts = [];
+    for (let i = 0; i <= end; i++) {
+      fakeProducts.push(generateProduct());
+    }
+    await db.Item.bulkCreate(fakeProducts);
+    await seed(startId, (ending - end));
   }
-  await db.Item.bulkCreate(fakeProducts);
+  await loop(startId, endId)
 };
 
 // This function drops the existing collection, runs `seed` to seed the
