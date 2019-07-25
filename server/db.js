@@ -7,8 +7,9 @@ class Item extends Model {};
 
 Item.init({
   id: {
-    type: Sequelize.DECIMAL,
+    type: Sequelize.INTEGER,
     primaryKey: true,
+    autoIncrement: true
   },
   name: Sequelize.STRING,
   url: Sequelize.STRING,
