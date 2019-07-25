@@ -23,11 +23,11 @@ const returnsAllowed = () => Math.random() < 0.8;
 
 // Returns an object representing a fake product
 const generateProduct = () => {
-  const name = faker.commerce.productName();
+  const name = faker.commerce.productName() ;
 
   return {
     name,
-    url: urlify(name),
+    url: urlify(name) + '-' + faker.random.alphaNumeric(5),
     condition: randomCondition(),
     price: parseFloat(faker.commerce.price()),
     sellerNote: sellerNote(),
@@ -54,7 +54,9 @@ const seed = async (startId, endId) => {
       fakeProducts.push(generateProduct());
     }
     await db.Item.bulkCreate(fakeProducts);
-    await seed(startId, (ending - end));
+    const remaining = ending - end;
+    console.log(remaining + ' items remaining');
+    await seed(startId, remaining);
   }
   await loop(startId, endId)
 };
