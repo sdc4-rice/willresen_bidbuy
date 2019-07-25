@@ -32,6 +32,14 @@ const getByName = (name) => {
   return Item.findOne({ raw: true, where: { name: name } });
 };
 
+const insertItem = (item) => {
+  return Item.create(item);
+}
+
+const deleteItem = (id) => {
+  return Item.destroy({where: {id: id}});
+}
+
 const updateItem = (id, bids, price) => {
   return Item.update({
     bids: bids,
@@ -45,11 +53,12 @@ const updateItem = (id, bids, price) => {
     });
 };
 
-
 module.exports = {
   getById,
   getByName,
   updateItem,
+  insertItem,
+  deleteItem,
   sequelize,
   Item
 };
