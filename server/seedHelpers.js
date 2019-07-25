@@ -22,11 +22,10 @@ const urlify = string => string.toLowerCase()
 const returnsAllowed = () => Math.random() < 0.8;
 
 // Returns an object representing a fake product
-const generateProduct = (id) => {
+const generateProduct = () => {
   const name = faker.commerce.productName();
 
   return {
-    id,
     name,
     url: urlify(name),
     condition: randomCondition(),
@@ -47,7 +46,7 @@ const generateProduct = (id) => {
 const seed = async (startId, endId) => {
   let fakeProducts = [];
   for (let i = startId; i <= endId; i++) {
-    fakeProducts.push(generateProduct(i));
+    fakeProducts.push(generateProduct());
     if (i % 50000 === 0) {
       await db.Item.bulkCreate(fakeProducts);
       fakeProducts = [];
