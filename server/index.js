@@ -24,6 +24,28 @@ app.get('/items/name/:name', (req, res) => {
   .catch(err => console.log(err));
 });
 
+//add a listing to the database
+app.post('/items', (req, res) => {
+  db.addItem(req.body)
+    .then(results => res.send(results))
+    .catch(err => console.log(err));
+});
+
+//update a listing in the database
+app.put('/items/id/:id', (req, res) => {
+  db.updateItem(req.body)
+  .then(results => res.send(results))
+  .catch(err => console.log(err));
+})
+
+//remove a listing from the database
+app.delete('/items/id/:id', (req, res) => {
+  db.deleteItem(req.params.id)
+    .then(results => res.send(results))
+    .catch(err => console.log(err))
+});
+
+//post a bid to a listing
 app.post('/bid/:id', (req, res) => {
   const { id } = req.params;
   const { bid } = req.body;
