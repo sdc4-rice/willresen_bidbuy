@@ -19,7 +19,7 @@ app.get('/items/id/:id', (req, res) => {
  //find product by name
 app.get('/items/name/:name', (req, res) => {
   db.getByName(req.params.name)
-  .then(results => res.send(results))
+    .then(results => res.send(results))
 });
 
 //add a listing to the database
@@ -27,6 +27,12 @@ app.post('/items', (req, res) => {
   db.addItem(req.body)
     .then(results => res.send(results))
 });
+
+//update an existing listing
+app.put('/items/id/:id', (req, res) => {
+  db.updateItem(req.params.id, req.body)
+    .then(results => res.json(results[1][0]))
+})
 
 //remove a listing from the database
 app.delete('/items/id/:id', (req, res) => {
@@ -50,7 +56,7 @@ app.post('/bid/:id', (req, res) => {
   db.getById(id)
     .tap(results => validateBid(results.price))
     .tap(item => item.bids += 1)
-    .then(item => db.updateItem(id, item.bids, parseFloat(bid)))
+    .then(item => db.updateItem(id, {bids: item.bids, price: parseFloat(bid)}))
     .then(updatedItem => res.json(updatedItem[1][0]))
     .catch(err => res.json({ error: true, message: err.message }));
 });
