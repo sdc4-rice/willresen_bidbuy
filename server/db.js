@@ -40,7 +40,7 @@ const deleteItem = (id) => {
   return Item.destroy({where: {id: id}, benchmark: true });
 }
 
-const updateItem = (id, { updated }) => {
+const updateItem = (id, updated) => {
   return Item.update(updated, {
       where: {
         id: id
