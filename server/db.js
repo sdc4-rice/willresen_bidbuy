@@ -25,11 +25,11 @@ Item.init({
 
 
 const getById = (id) => {
-  return Item.findOne({ raw: true, where: { id: id } });
+  return Item.findOne({ raw: true, where: { id: id }, benchmark: true });
 };
 
 const getByName = (name) => {
-  return Item.findOne({ raw: true, where: { name: name } });
+  return Item.findOne({ raw: true, where: { url: name }, benchmark: true });
 };
 
 const insertItem = (item) => {
@@ -37,19 +37,17 @@ const insertItem = (item) => {
 }
 
 const deleteItem = (id) => {
-  return Item.destroy({where: {id: id}});
+  return Item.destroy({where: {id: id}, benchmark: true });
 }
 
-const updateItem = (id, bids, price) => {
-  return Item.update({
-    bids: bids,
-    price: price
-  }, {
+const updateItem = (id, { updated }) => {
+  return Item.update(updated, {
       where: {
         id: id
       },
       returning: true,
-      raw: true
+      raw: true,
+      benchmark: true
     });
 };
 
