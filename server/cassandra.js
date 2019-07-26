@@ -9,7 +9,7 @@ const client = new cassandra.Client({
 const Items =
   `CREATE TABLE items (
     name text,
-    id uuid,
+    id text,
     url text,
     condition text,
     price decimal,
