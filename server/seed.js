@@ -1,3 +1,4 @@
+require('dotenv').config();
 // This file is run with `npm run seed`.
 //
 // When this file is run, the `handleSeeding` function is executed and the
