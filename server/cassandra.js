@@ -1,12 +1,14 @@
 const cassandra = require('cassandra-driver');
 
 const client = new cassandra.Client({
-  contactPoints: ['localhost:9042']
+  contactPoints: ['localhost:9042'],
+  localDataCenter: 'datacenter1',
+  keyspace: 'bidbuy'
 });
 
 const Items =
   `CREATE TABLE items (
-    id int PRIMARY KEY,
+    id text PRIMARY KEY,
     name text,
     url text,
     condition text,
@@ -31,11 +33,11 @@ const getByName = (name) => {
 
 const insertItem = (item) => {
   const query = `INSERT INTO items (
-             name, url, condition, price,
-             sellerNote, watchers, bids, shippingCountry,
-             returnsAllowed) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-  const args = [item.name, item.url, item.condition, item.price, item.sellerNote, item.watchers, item.bids, item.shippingCountry, item.returnsAllowed]
-  return client.execute(query, args);
+             id, name, url, condition, price,
+             sellerNote, expiresAt, watchers, bids, shippingCountry,
+             returnsAllowed) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+  const params = [item.id, item.name, item.url, item.condition, item.price, item.sellerNote, item.expiresAt, item.watchers, item.bids, item.shippingCountry, item.returnsAllowed]
+  return client.execute(query, params);
 };
 
 const deleteItem = (id) => {
