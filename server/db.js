@@ -1,19 +1,62 @@
-// const mongoose = require('mongoose');
-// mongoose.Promise = require('bluebird');
-// require('dotenv').config();
+const Sequelize = require('sequelize');
 
-// const databaseName = process.env.DB_NAME;
-// const databaseHost = process.env.DB_HOST || 'localhost';
+const sequelize = new Sequelize('postgres://postgres@localhost:5432/bidbuy');
+const Model = Sequelize.Model;
 
-// const handleConnect = () => {
-//   if (mongoose.connection.readyState === 0) { // not connected to database
-//     return mongoose.connect(`mongodb://${databaseHost}:27017/${databaseName}`, { useNewUrlParser: true, useCreateIndex: true });
-//   }
-//   return Promise.resolve(false); // already connected
-// };
+class Item extends Model {};
 
-// module.exports = {
-//   databaseName,
-//   mongoose,
-//   handleConnect,
-// };
+Item.init({
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  name: Sequelize.STRING,
+  url: Sequelize.STRING,
+  condition: Sequelize.STRING,
+  price: Sequelize.DECIMAL,
+  sellerNote: Sequelize.STRING,
+  expiresAt: Sequelize.DATE,
+  watchers: Sequelize.INTEGER,
+  bids: Sequelize.INTEGER,
+  shippingCountry: Sequelize.STRING,
+  returnsAllowed: Sequelize.BOOLEAN,
+}, { sequelize, modelName: 'item' });
+
+
+const getById = (id) => {
+  return Item.findOne({ raw: true, where: { id: id }, benchmark: true });
+};
+
+const getByName = (name) => {
+  return Item.findOne({ raw: true, where: { url: name }, benchmark: true });
+};
+
+const insertItem = (item) => {
+  return Item.create(item);
+}
+
+const deleteItem = (id) => {
+  return Item.destroy({where: {id: id}, benchmark: true });
+}
+
+const updateItem = (id, updated) => {
+  return Item.update(updated, {
+      where: {
+        id: id
+      },
+      returning: true,
+      raw: true,
+      benchmark: true
+    });
+};
+
+module.exports = {
+  getById,
+  getByName,
+  updateItem,
+  insertItem,
+  deleteItem,
+  sequelize,
+  Item
+};

@@ -1,5 +1,6 @@
 const faker = require('faker');
-const db = require('./db.js');
+// const db = require('./db.js');
+const db = require('./cassandra.js');
 require('dotenv').config();
 
 // HELPER FUNCTIONS
@@ -25,18 +26,10 @@ const returnsAllowed = () => Math.random() < 0.8;
 const generateProduct = () => {
   const name = faker.commerce.productName() ;
 
-  return {
-    name,
-    url: urlify(name) + '-' + faker.random.alphaNumeric(5),
-    condition: randomCondition(),
-    price: parseFloat(faker.commerce.price()),
-    sellerNote: sellerNote(),
-    expiresAt: faker.date.recent(-30), // a date up to 30 days in the future
-    watchers: faker.random.number(75),
-    bids: faker.random.number(50),
-    shippingCountry: faker.address.country(),
-    returnsAllowed: returnsAllowed(),
-  };
+  return [
+    name, urlify(name) + '-' + faker.random.alphaNumeric(8), randomCondition(),
+    parseFloat(faker.commerce.price()), sellerNote(), faker.date.future(1), faker.date.recent(-90), faker.random.number(75),
+    faker.random.number(50), faker.address.country(), returnsAllowed()];
 };
 
 // MAIN FUNCTIONS
@@ -44,21 +37,26 @@ const generateProduct = () => {
 // returns a promise that resolves once all fake products have been added to the
 // database.
 const seed = async (startId, endId) => {
+  console.time('seeder');
   const loop = async (start, ending) => {
     if (ending === 0) {
       return Promise.resolve(true);
     }
-    let end = ending > 50000 ? 50000 : ending
+    let end = ending > 159 ? 159 : ending
     let fakeProducts = [];
     for (let i = 0; i <= end; i++) {
-      fakeProducts.push(generateProduct());
+      fakeProducts.push({query: `INSERT INTO items (
+        id, name, url, condition, price,
+        sellerNote, expiresAt, createdAt, watchers, bids, shippingCountry,
+        returnsAllowed) VALUES (uuid(), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, params: generateProduct()});
     }
-    await db.Item.bulkCreate(fakeProducts);
-    const remaining = ending - end;
-    console.log(remaining + ' items remaining');
-    await seed(startId, remaining);
+    await db.client.batch(fakeProducts, {prepare: true});
+    let remaining = ending - end
+    console.log('Remaining: ' + remaining);
+    await loop(startId, remaining);
   }
   await loop(startId, endId)
+  console.timeEnd('seeder');
 };
 
 // This function drops the existing collection, runs `seed` to seed the
@@ -73,8 +71,9 @@ const handleSeeding = () => {
   console.log('Seeding database...');
   console.log(`Adding items with ids ${startId} to ${endId}`);
 
-  return db.sequelize.authenticate()
-    .then(() => db.sequelize.sync({force: true}))
+  return db.client.connect()
+    .then(() => db.client.execute('DROP TABLE IF EXISTS items'))
+    .then(() => db.client.execute(db.Items))
     .catch((err) => {
       console.log('Error dropping collection:', err);
       throw err;

@@ -1,6 +1,5 @@
 const rp = require('request-promise');
 const db = require('../../server/db.js');
-const Product = require('../../server/model.js');
 const { app } = require('../../server/index.js');
 
 
@@ -32,18 +31,18 @@ describe('API routes', () => {
   let expectedProduct;
 
   beforeAll(() => {
-    return db.handleConnect()
-      .then(() => Product.findOne())
+    return db.sequelize.authenticate()
+      .then(() => db.getById('1'))
       .then((product) => {
+        console.log(product)
         productId = product.id;
-        productName = product['url-name'];
-        expectedProduct = product.toObject(); // turns the mongoose model into a simpler object
+        productName = product.name;
+        expectedProduct = product; // turns the mongoose model into a simpler object
       });
   });
 
   afterAll(() => {
     app.close();
-    db.mongoose.disconnect();
   });
 
   // GET '/items/id/' routes

@@ -2,19 +2,21 @@
 
 The bid-buy component of an eBay auction page.
 
-## Related Projects
-
-  - https://github.com/fec4-gandolf/images-modal
-  - https://github.com/fec4-gandolf/Napoleon-Service
-  - https://github.com/fec4-gandolf/PeopleAlsoViewed
+## Contributors
+  - The OG: Thomas Foerster
+  - The Remix: Will Resen
 
 ## Table of Contents
 
-1. [Setup (without docker)](#setup-without-docker)
-1. [Setup (with docker)](#setup-with-docker)
-1. [Usage](#usage-local)
 1. [Requirements](#requirements)
-1. [Development](#development)
+2. [Setup (without docker)](#setup-without-docker)
+3. [Setup (with docker)](#setup-with-docker)
+4. [Usage](#usage-local)
+5. [API Endpoints](#api-endpoints)
+
+## Requirements
+
+PostgreSQL
 
 ## Setup (without Docker)
 
@@ -51,6 +53,13 @@ If you fail to specify the id or name of a product, you will see a "Product not 
 
 The bundle is located at `http://localhost:<PORT>/bundle.js`. It will automatically mount the React component to an element with id the `bid-buy`.
 
-## Requirements
 
-MongoDB
+## API Endpoints
+<pre>
+GET:      /items/id/:id          -->        Retrieves an item listing by its ID.
+GET:      /items/name/:name      -->        Retrieves an item listing by its name.
+POST:     /bid/:bid              -->        Verifies and places a bid on the current item listing.
+POST:     /items/                -->        Add a new item listing.
+PUT:      /items/id/:id          -->        Updates an item listing.
+DELETE:   /items/id/:id          -->        Removes an item listing.
+</pre>
