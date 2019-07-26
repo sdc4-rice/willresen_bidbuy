@@ -28,11 +28,6 @@ const generateProduct = () => {
   const name = faker.commerce.productName();
   const id = faker.random.alphaNumeric(8);
 
-  // return [
-  //   name, urlify(name) + '-' + faker.random.alphaNumeric(8), randomCondition(),
-  //   parseFloat(faker.commerce.price()), sellerNote(), faker.date.future(1), faker.date.recent(-90), faker.random.number(75),
-  //   faker.random.number(50), faker.address.country(), returnsAllowed()];
-
   return {
     id: id,
     name,
