@@ -23,15 +23,18 @@ const returnsAllowed = () => Math.random() < 0.8;
 
 // Returns an object representing a fake product
 const generateProduct = () => {
-  const name = faker.commerce.productName() ;
+  const name = faker.commerce.productName();;
+  const id = fake.random.alphaNumeric(8);
 
   return {
+    id: id,
     name,
-    url: urlify(name) + '-' + faker.random.alphaNumeric(5),
+    url: urlify(name) + '-' + id,
     condition: randomCondition(),
     price: parseFloat(faker.commerce.price()),
     sellerNote: sellerNote(),
-    expiresAt: faker.date.recent(-30), // a date up to 30 days in the future
+    expiresAt: faker.date.future(1)), // a date up to 30 days in the future
+    createdAt: faker.date.recent(-90),
     watchers: faker.random.number(75),
     bids: faker.random.number(50),
     shippingCountry: faker.address.country(),
