@@ -33,7 +33,7 @@ const generateProduct = () => {
     condition: randomCondition(),
     price: parseFloat(faker.commerce.price()),
     sellerNote: sellerNote(),
-    expiresAt: faker.date.future(1)), // a date up to 30 days in the future
+    expiresAt: faker.date.future(1), // a date up to 30 days in the future
     createdAt: faker.date.recent(-90),
     watchers: faker.random.number(75),
     bids: faker.random.number(50),
