@@ -1,6 +1,7 @@
 const faker = require('faker');
 // const db = require('./db.js');
 const db = require('./cassandra.js');
+const concurrent = require('cassandra-driver').concurrent;
 require('dotenv').config();
 
 // HELPER FUNCTIONS
@@ -24,33 +25,76 @@ const returnsAllowed = () => Math.random() < 0.8;
 
 // Returns an object representing a fake product
 const generateProduct = () => {
-  const name = faker.commerce.productName() ;
+  const name = faker.commerce.productName();
+  const id = faker.random.alphaNumeric(8);
 
-  return [
-    name, urlify(name) + '-' + faker.random.alphaNumeric(8), randomCondition(),
-    parseFloat(faker.commerce.price()), sellerNote(), faker.date.future(1), faker.date.recent(-90), faker.random.number(75),
-    faker.random.number(50), faker.address.country(), returnsAllowed()];
+  // return [
+  //   name, urlify(name) + '-' + faker.random.alphaNumeric(8), randomCondition(),
+  //   parseFloat(faker.commerce.price()), sellerNote(), faker.date.future(1), faker.date.recent(-90), faker.random.number(75),
+  //   faker.random.number(50), faker.address.country(), returnsAllowed()];
+
+  return {
+    id: id,
+    name,
+    url: urlify(name) + '-' + id,
+    condition: randomCondition(),
+    price: parseFloat(faker.commerce.price()),
+    sellerNote: sellerNote(),
+    expiresAt: faker.date.future(1),
+    createdAt: faker.date.recent(-90),
+    watchers: faker.random.number(75),
+    bids: faker.random.number(50),
+    shippingCountry: faker.address.country(),
+    returnsAllowed: returnsAllowed(),
+  };
+
 };
 
 // MAIN FUNCTIONS
 // This function generates fake products and adds them to the database. It
 // returns a promise that resolves once all fake products have been added to the
 // database.
+
+// const seed = async (startId, endId) => {
+//   console.time('seeder');
+//   const loop = async (start, ending) => {
+//     if (ending === 0) {
+//       return Promise.resolve(true);
+//     }
+//     let end = ending > 159 ? 159 : ending
+//     let fakeProducts = [];
+//     for (let i = 0; i <= end; i++) {
+//       fakeProducts.push({query: `INSERT INTO items (
+//         id, name, url, condition, price,
+//         sellerNote, expiresAt, createdAt, watchers, bids, shippingCountry,
+//         returnsAllowed) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, params: generateProduct()});
+//     }
+//     await db.client.batch(fakeProducts, {prepare: true});
+//     let remaining = ending - end
+//     console.log('Remaining: ' + remaining);
+//     await loop(startId, remaining);
+//   }
+//   await loop(startId, endId)
+//   console.timeEnd('seeder');
+// };
+
 const seed = async (startId, endId) => {
   console.time('seeder');
+  let query = `INSERT INTO items (
+             id, name, url, condition, price,
+             sellerNote, expiresAt, createdAt, watchers, bids, shippingCountry,
+             returnsAllowed) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
   const loop = async (start, ending) => {
     if (ending === 0) {
       return Promise.resolve(true);
     }
-    let end = ending > 159 ? 159 : ending
+    let end = ending > 50000 ? 50000 : ending
     let fakeProducts = [];
     for (let i = 0; i <= end; i++) {
-      fakeProducts.push({query: `INSERT INTO items (
-        id, name, url, condition, price,
-        sellerNote, expiresAt, createdAt, watchers, bids, shippingCountry,
-        returnsAllowed) VALUES (uuid(), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, params: generateProduct()});
+      fakeProducts.push(generateProduct());
     }
-    await db.client.batch(fakeProducts, {prepare: true});
+
+    await concurrent.executeConcurrent(db.client, query, fakeProducts, { concurrencyLevel: 500 });
     let remaining = ending - end
     console.log('Remaining: ' + remaining);
     await loop(startId, remaining);
@@ -58,6 +102,8 @@ const seed = async (startId, endId) => {
   await loop(startId, endId)
   console.timeEnd('seeder');
 };
+
+
 
 // This function drops the existing collection, runs `seed` to seed the
 // database with new products, and finally logs a message to the console when
