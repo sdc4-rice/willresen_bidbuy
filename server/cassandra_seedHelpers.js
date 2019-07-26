@@ -1,6 +1,5 @@
 const faker = require('faker');
-// const db = require('./db.js');
-const db = require('./cassandra.js');
+const db = require(`./${process.env.DATABASE}.js`);
 const concurrent = require('cassandra-driver').concurrent;
 require('dotenv').config();
 

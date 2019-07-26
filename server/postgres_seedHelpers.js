@@ -1,5 +1,5 @@
 const faker = require('faker');
-const db = require('./db.js');
+const db = require(`./${process.env.DATABASE}.js`);
 require('dotenv').config();
 
 // HELPER FUNCTIONS
