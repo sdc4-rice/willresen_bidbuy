@@ -27,8 +27,8 @@ const generateProduct = () => {
   const name = faker.commerce.productName() ;
 
   return [
-    faker.random.alphaNumeric(10), name, urlify(name) + '-' + faker.random.alphaNumeric(5), randomCondition(),
-    parseFloat(faker.commerce.price()), sellerNote(), faker.date.recent(-30), faker.random.number(75),
+    name, urlify(name) + '-' + faker.random.alphaNumeric(8), randomCondition(),
+    parseFloat(faker.commerce.price()), sellerNote(), faker.date.future(1), faker.date.recent(-90), faker.random.number(75),
     faker.random.number(50), faker.address.country(), returnsAllowed()];
 };
 
@@ -47,12 +47,12 @@ const seed = async (startId, endId) => {
     for (let i = 0; i <= end; i++) {
       fakeProducts.push({query: `INSERT INTO items (
         id, name, url, condition, price,
-        sellerNote, expiresAt, watchers, bids, shippingCountry,
-        returnsAllowed) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, params: generateProduct()});
+        sellerNote, expiresAt, createdAt, watchers, bids, shippingCountry,
+        returnsAllowed) VALUES (uuid(), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, params: generateProduct()});
     }
     await db.client.batch(fakeProducts, {prepare: true});
-    const remaining = ending - end;
-    console.log(remaining + ' items remaining');
+    let remaining = ending - end
+    console.log('Remaining: ' + remaining);
     await loop(startId, remaining);
   }
   await loop(startId, endId)

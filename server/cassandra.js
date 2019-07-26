@@ -8,18 +8,20 @@ const client = new cassandra.Client({
 
 const Items =
   `CREATE TABLE items (
-    id text PRIMARY KEY,
     name text,
+    id uuid,
     url text,
     condition text,
     price decimal,
     sellerNote text,
     expiresAt timestamp,
+    createdAt timestamp,
     watchers int,
     bids int,
     shippingCountry text,
-    returnsAllowed boolean
-  );
+    returnsAllowed boolean,
+    PRIMARY KEY (name, createdAt, id)
+  ) WITH CLUSTERING ORDER BY (createdAt DESC);
 `
 const getById = (id) => {
   const query = 'SELECT * FROM items WHERE id = ?';
@@ -33,9 +35,9 @@ const getByName = (name) => {
 
 const insertItem = (item) => {
   const query = `INSERT INTO items (
-             id, name, url, condition, price,
+             id, name, condition, price,
              sellerNote, expiresAt, watchers, bids, shippingCountry,
-             returnsAllowed) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+             returnsAllowed) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
   const params = [item.id, item.name, item.url, item.condition, item.price, item.sellerNote, item.expiresAt, item.watchers, item.bids, item.shippingCountry, item.returnsAllowed]
   return client.execute(query, params);
 };
