@@ -6,8 +6,7 @@
 // This file exits automatically when the seeding script is done. The exit
 // code indicates whether the seeding was successful.
 
-// const { handleSeeding } = require('./postgres_seedHelpers.js');
-const { handleSeeding } = require('./cassandra_seedHelpers.js');
+const { handleSeeding } = require(`./${process.env.DATABASE}_seedHelpers.js`);
 
 handleSeeding()
   .then(() => process.exit(0))
