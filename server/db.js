@@ -7,9 +7,8 @@ class Item extends Model {};
 
 Item.init({
   id: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
     primaryKey: true,
-    autoIncrement: true
   },
   name: Sequelize.STRING,
   url: Sequelize.STRING,
@@ -17,6 +16,7 @@ Item.init({
   price: Sequelize.DECIMAL,
   sellerNote: Sequelize.STRING,
   expiresAt: Sequelize.DATE,
+  createdAt: Sequelize.DATE,
   watchers: Sequelize.INTEGER,
   bids: Sequelize.INTEGER,
   shippingCountry: Sequelize.STRING,
@@ -25,11 +25,11 @@ Item.init({
 
 
 const getById = (id) => {
-  return Item.findOne({ raw: true, where: { id: id }, benchmark: true });
+  return Item.findOne({ raw: true, where: { id: id });
 };
 
 const getByName = (name) => {
-  return Item.findOne({ raw: true, where: { url: name }, benchmark: true });
+  return Item.findOne({ raw: true, where: { url: name });
 };
 
 const insertItem = (item) => {
@@ -37,7 +37,7 @@ const insertItem = (item) => {
 }
 
 const deleteItem = (id) => {
-  return Item.destroy({where: {id: id}, benchmark: true });
+  return Item.destroy({where: {id: id});
 }
 
 const updateItem = (id, updated) => {
@@ -46,8 +46,7 @@ const updateItem = (id, updated) => {
         id: id
       },
       returning: true,
-      raw: true,
-      benchmark: true
+      raw: true
     });
 };
 
