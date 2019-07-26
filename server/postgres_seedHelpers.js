@@ -24,7 +24,7 @@ const returnsAllowed = () => Math.random() < 0.8;
 // Returns an object representing a fake product
 const generateProduct = () => {
   const name = faker.commerce.productName();;
-  const id = fake.random.alphaNumeric(8);
+  const id = faker.random.alphaNumeric(8);
 
   return {
     id: id,
