@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const db = require('./db.js');
+// const db = require('./db.js');
+const db = require('./cassandra.js');
 require('dotenv').config();
 
 const port = process.env.PORT;
