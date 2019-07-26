@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('postgres://postgres@localhost:5432/bidbuy');
+const sequelize = new Sequelize('postgres://postgres@localhost:5432/bidbuy', {logging: false});
 const Model = Sequelize.Model;
 
 class Item extends Model {};
