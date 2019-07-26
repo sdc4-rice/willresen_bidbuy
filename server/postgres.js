@@ -25,11 +25,11 @@ Item.init({
 
 
 const getById = (id) => {
-  return Item.findOne({ raw: true, where: { id: id });
+  return Item.findOne({ raw: true, where: { id: id }});
 };
 
 const getByName = (name) => {
-  return Item.findOne({ raw: true, where: { url: name });
+  return Item.findOne({ raw: true, where: { url: name }});
 };
 
 const insertItem = (item) => {
@@ -37,7 +37,7 @@ const insertItem = (item) => {
 }
 
 const deleteItem = (id) => {
-  return Item.destroy({where: {id: id});
+  return Item.destroy({where: {id: id}});
 }
 
 const updateItem = (id, updated) => {
