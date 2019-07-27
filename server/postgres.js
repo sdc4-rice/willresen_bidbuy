@@ -1,6 +1,13 @@
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('postgres://postgres@localhost:5432/bidbuy', {logging: false});
+const sequelize = new Sequelize('postgres://postgres@localhost:5432/bidbuy', {
+  logging: false,
+  pool: {
+    max: 10,
+    min: 5,
+    idle: 100000
+  }
+});
 const Model = Sequelize.Model;
 
 class Item extends Model {};
@@ -21,7 +28,7 @@ Item.init({
   bids: Sequelize.INTEGER,
   shippingCountry: Sequelize.STRING,
   returnsAllowed: Sequelize.BOOLEAN,
-}, { sequelize, modelName: 'item' });
+}, { sequelize, modelName: 'item', timestamps: false });
 
 
 const getById = (id) => {
