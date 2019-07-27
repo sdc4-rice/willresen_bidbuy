@@ -50,7 +50,10 @@ let stream = fs.createWriteStream(__dirname + '/mockData.csv');
 const generateRows = async (rows) => {
   console.log('Starting to generate...');
   console.time('Seeder');
-  db.sequelize.authenticate().then(() => db.sequelize.sync({force: true})).catch(err => console.log(err))
+  /* Verify that the PostgreSQL db is running */
+  db.sequelize.authenticate()
+    .then(() => db.sequelize.sync({ force: true }))
+    .catch(() => process.exit(0))
 
   const write = async () => {
     let ok = true;
@@ -58,14 +61,8 @@ const generateRows = async (rows) => {
       ok = await stream.write(Object.values(generateProduct()).join(',') + '\r\n', err => err && console.log(err));
       rows--;
     }
-    console.log('Remaining: ' + rows);
-    if (rows > 0) {
-      return new Promise((resolve, reject) => stream.once('drain', () => {
-        resolve(write());
-      }))
-    } else {
-      return Promise.resolve(true);
-    }
+    console.log(rows + ' rows remaining.');
+    return rows > 0 ? new Promise((resolve, reject) => stream.once('drain', () => resolve(write() ))) : Promise.resolve(true);
   }
   await write();
   console.log('Done writing!');
