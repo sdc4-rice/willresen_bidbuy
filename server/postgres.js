@@ -14,7 +14,7 @@ class Item extends Model {};
 
 Item.init({
   id: {
-    type: Sequelize.STRING,
+    type: Sequelize.INTEGER,
     primaryKey: true,
   },
   name: Sequelize.STRING,
