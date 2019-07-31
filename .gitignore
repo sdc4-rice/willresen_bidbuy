@@ -30,3 +30,6 @@ bundle.js
 
 #CSV
 *.csv
+
+#New Relic
+newrelic*
