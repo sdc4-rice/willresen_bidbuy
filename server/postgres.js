@@ -1,6 +1,13 @@
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('postgres://postgres@localhost:5432/bidbuy');
+const sequelize = new Sequelize('postgres://postgres@localhost:5432/bidbuy', {
+  logging: false,
+  pool: {
+    max: 20,
+    min: 5,
+    idle: 1000
+  },
+});
 const Model = Sequelize.Model;
 
 class Item extends Model {};
@@ -15,21 +22,22 @@ Item.init({
   url: Sequelize.STRING,
   condition: Sequelize.STRING,
   price: Sequelize.DECIMAL,
-  sellerNote: Sequelize.STRING,
-  expiresAt: Sequelize.DATE,
+  sellernote: Sequelize.STRING,
+  expiresat: Sequelize.DATE,
+  createdat: Sequelize.DATE,
   watchers: Sequelize.INTEGER,
   bids: Sequelize.INTEGER,
-  shippingCountry: Sequelize.STRING,
-  returnsAllowed: Sequelize.BOOLEAN,
-}, { sequelize, modelName: 'item' });
+  shippingcountry: Sequelize.STRING,
+  returnsallowed: Sequelize.BOOLEAN,
+}, { sequelize, modelName: 'item', timestamps: false });
 
 
 const getById = (id) => {
-  return Item.findOne({ raw: true, where: { id: id }, benchmark: true });
+  return Item.findOne({ raw: true, where: { id: id }});
 };
 
 const getByName = (name) => {
-  return Item.findOne({ raw: true, where: { url: name }, benchmark: true });
+  return Item.findOne({ raw: true, where: { url: name }});
 };
 
 const insertItem = (item) => {
@@ -37,7 +45,7 @@ const insertItem = (item) => {
 }
 
 const deleteItem = (id) => {
-  return Item.destroy({where: {id: id}, benchmark: true });
+  return Item.destroy({where: {id: id}});
 }
 
 const updateItem = (id, updated) => {
@@ -46,8 +54,7 @@ const updateItem = (id, updated) => {
         id: id
       },
       returning: true,
-      raw: true,
-      benchmark: true
+      raw: true
     });
 };
 

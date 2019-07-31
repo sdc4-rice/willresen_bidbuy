@@ -27,3 +27,9 @@ bundle.js
 
 # ENV file
 .env
+
+#CSV
+*.csv
+
+#New Relic
+newrelic*

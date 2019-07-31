@@ -8,8 +8,8 @@ const client = new cassandra.Client({
 
 const Items =
   `CREATE TABLE items (
+    id int,
     name text,
-    id uuid,
     url text,
     condition text,
     price decimal,
