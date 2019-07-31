@@ -31,7 +31,6 @@ const generateProduct = (rows) => {
   const name = faker.commerce.productName();;
 
   return {
-    id: rows,
     name,
     url: urlify(name) + '-' + faker.random.alphaNumeric(3),
     condition: randomCondition(),
@@ -93,7 +92,7 @@ generateRows(process.env.ROWS_TO_GENERATE)
   .then(async () => {
     if (currentDb === 'postgres') {
       console.log('>>> Importing to Postgres, please wait... <<<');
-      const { stdout, stderr } = await exec(`docker exec postgres psql -U postgres bidbuy -c "\\copy items from mockData.csv with (format 'csv');"`);
+      const { stdout, stderr } = await exec(`docker exec postgres psql -U postgres bidbuy -c "\\copy items ("name", "url", "condition", "price", "sellerNote", "expiresAt", "createdAt", "watchers", "bids", "shippingCountry", "returnsAllowed") from mockData.csv with (format 'csv');"`);
       if (stdout) console.log('stdout:', stdout);
       if (stderr) throw stderr;
 
