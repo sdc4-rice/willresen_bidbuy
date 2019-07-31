@@ -1,3 +1,4 @@
+require('newrelic');
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
@@ -24,8 +25,10 @@ app.get('/items/name/:name', (req, res) => {
 
 //add a listing to the database
 app.post('/items', (req, res) => {
-  db.addItem(req.body)
-    .then(results => res.send(results))
+  db.insertItem(req.body)
+    .then(results => {
+      res.send(results)
+    })
 });
 
 //update an existing listing
