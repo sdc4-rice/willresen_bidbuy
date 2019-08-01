@@ -90,22 +90,13 @@ generateRows(process.env.ROWS_TO_GENERATE)
 
   /* Import the CSV to the database */
   .then(async () => {
-    if (currentDb === 'postgres') {
-      console.log('>>> Importing to Postgres, please wait... <<<');
-      const { stdout, stderr } = await exec(`docker exec postgres psql -U postgres bidbuy -c "\\copy items ("name", "url", "condition", "price", "sellerNote", "expiresAt", "createdAt", "watchers", "bids", "shippingCountry", "returnsAllowed") from mockData.csv with (format 'csv');"`);
-      if (stdout) console.log('stdout:', stdout);
-      if (stderr) throw stderr;
-
-    } else if (currentDb === 'cassandra') {
-      const { stdout, stderr } = await exec(`docker exec cassandra cqlsh localhost -k bidbuy -e "copy items (id, name, url, condition, price, sellerNote, expiresAt, createdAt, watchers, bids, shippingCountry, returnsAllowed) from 'mockData.csv'"`);
-      if (stdout) console.log('stdout:', stdout);
-      if (stderr) throw stderr;
-    }
-
+    console.log('>>> Importing to Postgres, please wait... <<<');
+    const { stdout, stderr } = await exec(`docker exec postgres psql -U postgres bidbuy -c "\\copy items ("name", "url", "condition", "price", "sellerNote", "expiresAt", "createdAt", "watchers", "bids", "shippingCountry", "returnsAllowed") from mockData.csv with (format 'csv');"`);
+    if (stdout) console.log('stdout:', stdout);
+    if (stderr) throw stderr;
   })
   .then(() => console.timeEnd('Seeder'))
   .then(() => process.exit(0));
-
 
 module.exports = {
   generateProduct,
