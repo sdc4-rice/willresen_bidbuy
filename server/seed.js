@@ -52,16 +52,9 @@ const generateRows = async (rows) => {
   console.time('Seeder');
 
   /* Verify that the database is running and drop existing table */
-  if (currentDb === 'postgres') {
-    db.sequelize.authenticate()
-      .then(() => db.sequelize.sync({ force: true }))
-      .catch(() => process.exit(0))
-  } else if (currentDb === 'cassandra') {
-    db.client.connect()
-      .then(() => db.client.execute('DROP TABLE IF EXISTS items'))
-      .then(() => db.client.execute(db.Items))
-      .catch(() => process.exit(0))
-  }
+  db.sequelize.authenticate()
+    .then(() => db.sequelize.sync({ force: true }))
+    .catch(() => process.exit(0))
 
   const write = async () => {
     let ok = true;
