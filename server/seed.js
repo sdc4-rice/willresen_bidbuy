@@ -84,7 +84,7 @@ generateRows(process.env.ROWS_TO_GENERATE)
   /* Import the CSV to the database */
   .then(async () => {
     console.log('>>> Importing to Postgres, please wait... <<<');
-    const { stdout, stderr } = await exec(`${process.env.DB_SSH_LOGIN} 'psql -U postgres bidbuy -c "\\copy items ("name", "url", "condition", "price", "sellerNote", "expiresAt", "createdAt", "watchers", "bids", "shippingCountry", "returnsAllowed") from mockData.csv with (format 'csv');"'`);
+    const { stdout, stderr } = await exec(`${process.env.DB_SSH_LOGIN} 'psql -U postgres bidbuy -c "\\copy items ("name", "url", "condition", "price", "sellernote", "expiresat", "createdat", "watchers", "bids", "shippingaountry", "returnsallowed") from mockData.csv with (format 'csv');"'`);
     if (stdout) console.log('stdout:', stdout);
     if (stderr) throw stderr;
   })
