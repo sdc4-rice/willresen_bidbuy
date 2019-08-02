@@ -52,16 +52,9 @@ const generateRows = async (rows) => {
   console.time('Seeder');
 
   /* Verify that the database is running and drop existing table */
-  if (currentDb === 'postgres') {
-    db.sequelize.authenticate()
-      .then(() => db.sequelize.sync({ force: true }))
-      .catch(() => process.exit(0))
-  } else if (currentDb === 'cassandra') {
-    db.client.connect()
-      .then(() => db.client.execute('DROP TABLE IF EXISTS items'))
-      .then(() => db.client.execute(db.Items))
-      .catch(() => process.exit(0))
-  }
+  db.sequelize.authenticate()
+    .then(() => db.sequelize.sync({ force: true }))
+    .catch(() => process.exit(0))
 
   const write = async () => {
     let ok = true;
@@ -82,30 +75,21 @@ generateRows(process.env.ROWS_TO_GENERATE)
 
   /* Transfer the generated CSV to the docker container */
   .then(async () => {
-    console.log('>>> Transferring to Docker, please wait... <<<');
-    const { stdout, stderr } = await exec(`docker cp ${__dirname}/mockData.csv ${currentDb}:/mockData.csv`);
+    console.log('>>> Transferring to Database server, please wait... <<<');
+    const { stdout, stderr } = await exec(`${process.env.CSV_MV_SCRIPT}`);
     if (stdout) console.log('stdout:', stdout);
     if (stderr) throw stderr;
   })
 
   /* Import the CSV to the database */
   .then(async () => {
-    if (currentDb === 'postgres') {
-      console.log('>>> Importing to Postgres, please wait... <<<');
-      const { stdout, stderr } = await exec(`docker exec postgres psql -U postgres bidbuy -c "\\copy items ("name", "url", "condition", "price", "sellerNote", "expiresAt", "createdAt", "watchers", "bids", "shippingCountry", "returnsAllowed") from mockData.csv with (format 'csv');"`);
-      if (stdout) console.log('stdout:', stdout);
-      if (stderr) throw stderr;
-
-    } else if (currentDb === 'cassandra') {
-      const { stdout, stderr } = await exec(`docker exec cassandra cqlsh localhost -k bidbuy -e "copy items (id, name, url, condition, price, sellerNote, expiresAt, createdAt, watchers, bids, shippingCountry, returnsAllowed) from 'mockData.csv'"`);
-      if (stdout) console.log('stdout:', stdout);
-      if (stderr) throw stderr;
-    }
-
+    console.log('>>> Importing to Postgres, please wait... <<<');
+    const { stdout, stderr } = await exec(`${process.env.DB_SSH_LOGIN} 'psql -U postgres bidbuy -c "\\copy items ("name", "url", "condition", "price", "sellernote", "expiresat", "createdat", "watchers", "bids", "shippingaountry", "returnsallowed") from mockData.csv with (format 'csv');"'`);
+    if (stdout) console.log('stdout:', stdout);
+    if (stderr) throw stderr;
   })
   .then(() => console.timeEnd('Seeder'))
   .then(() => process.exit(0));
-
 
 module.exports = {
   generateProduct,

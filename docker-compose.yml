@@ -1,14 +1,7 @@
 version: '2'
 services:
-  app:
-    # If you're running on your local machine and not deploying,
-    # change the following line to 'build: .'
+  bid-buy:
     build: .
+    container_name: bidbuy
     ports:
       - '3001:3001'
-    links:
-      - mongo
-  mongo:
-    image: mongo
-    ports:
-      - '27017:27017'
