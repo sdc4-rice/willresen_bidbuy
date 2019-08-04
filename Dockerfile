@@ -4,4 +4,4 @@ COPY package*.json ./
 RUN npm install
 COPY . .
 EXPOSE 3001
-CMD npm run seed && npm run build && npm start
+CMD npm run build && npm start
