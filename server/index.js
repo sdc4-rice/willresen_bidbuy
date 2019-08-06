@@ -1,15 +1,39 @@
 require('newrelic');
 require('dotenv').config();
 const express = require('express');
+const fs = require('fs');
 const cors = require('cors');
+const React = require('react');
 const db = require(`./${process.env.DATABASE}.js`);
+const ReactDOMServer = require('react-dom/server');
+const BidBuy = require('../client/dist/BidBuy.js');
+const { ServerStyleSheet } = require('styled-components');
 
 const port = process.env.PORT;
 const app = express();
 
 app.use(express.json());
-app.use(express.static('public'));
 app.use(cors());
+
+const handleRender = async (req, res) => {
+  await db.getById(req.query.id)
+    .then(results => {
+      const sheet = new ServerStyleSheet();
+      const html = ReactDOMServer.renderToString(sheet.collectStyles(React.createElement(BidBuy.default, { product: results })));
+      const styleTags = sheet.getStyleTags();
+      sheet.seal();
+      fs.readFile('./public/index.html', 'utf8', (err, data) => {
+        if (err) throw err;
+        const document = data.replace(/<div id="bid-buy"><\/div>/, `<div id="bid-buy">${html}</div>`)
+          .replace(/<\/head>/, `${styleTags}</head>`);
+        res.send(document);
+      });
+    })
+};
+
+// app.use(express.static('public'));
+
+app.get('/', handleRender);
 
 //find product by id
 app.get('/items/id/:id', (req, res) => {
