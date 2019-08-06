@@ -77,7 +77,8 @@ class BidBuy extends React.Component {
 
   fetchItemById(id) {
     fetch(`${hostURL}/items/id/${id}`)
-      .then(response => response.json())
+      .then(response => response.text())
+      .then(res => console.log(res))
       .then(product => this.setState({ product }))
       .catch(console.log);
   }
@@ -122,7 +123,7 @@ class BidBuy extends React.Component {
 
 
   render() {
-    const { product } = this.state;
+    const { product } = this.props;
 
     return product ? (
       <Div>
