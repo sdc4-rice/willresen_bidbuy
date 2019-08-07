@@ -26,12 +26,12 @@ const TopInfo = ({ product }) => (
       <Td>Condition:</Td>
       <Td><strong>{product.condition}</strong></Td>
     </TopRow>
-    {product.sellerNote ? (
+    {product.sellernote ? (
       <TopRow>
         <Td />
         <SellerNote>
           &quot;
-          {product.sellerNote}
+          {product.sellernote}
           &quot;
         </SellerNote>
       </TopRow>
@@ -39,8 +39,8 @@ const TopInfo = ({ product }) => (
     <TopRow>
       <Td>Time Left:</Td>
       <Td>
-        {moment(product.expiresAt).fromNow(true)}
-        <Span>{moment(product.expiresAt).format('dddd, h:mmA')}</Span>
+        {moment(product.expiresat).fromNow(true)}
+        <Span>{moment(product.expiresat).format('dddd, h:mmA')}</Span>
       </Td>
     </TopRow>
   </tbody>
