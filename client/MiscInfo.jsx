@@ -18,9 +18,9 @@ const MiscInfo = ({ product }) => (
         {`${product.watchers} watchers`}
       </Td>
       <Td>
-        {`Ships from ${product.shippingCountry}`}
+        {`Ships from ${product.shippingcountry}`}
       </Td>
-      <Td>{product.returnsAllowed ? '30-day returns' : 'No returns'}</Td>
+      <Td>{product.returnsallowed ? '30-day returns' : 'No returns'}</Td>
     </BottomRow>
   </tbody>
 );
