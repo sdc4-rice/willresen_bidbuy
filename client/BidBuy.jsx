@@ -122,7 +122,7 @@ class BidBuy extends React.Component {
 
 
   render() {
-    const { product } = this.state;
+    const { product } = this.state ? this.state : this.props
 
     return product ? (
       <Div>

@@ -2,4 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import BidBuy from './BidBuy';
 
-ReactDOM.render(<BidBuy />, document.getElementById('bid-buy'));
+if (typeof window !== 'undefined') {
+  ReactDOM.hydrate(<BidBuy />, document.getElementById('bid-buy'));
+}

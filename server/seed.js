@@ -72,24 +72,25 @@ const generateRows = async (rows) => {
 };
 
 generateRows(process.env.ROWS_TO_GENERATE)
-
-  /* Transfer the generated CSV to the docker container */
-  .then(async () => {
-    console.log('>>> Transferring to Database server, please wait... <<<');
-    const { stdout, stderr } = await exec(`${process.env.CSV_MV_SCRIPT}`);
-    if (stdout) console.log('stdout:', stdout);
-    if (stderr) throw stderr;
-  })
-
-  /* Import the CSV to the database */
-  .then(async () => {
-    console.log('>>> Importing to Postgres, please wait... <<<');
-    const { stdout, stderr } = await exec(`${process.env.DB_SSH_LOGIN} 'psql -U postgres bidbuy -c "\\copy items ("name", "url", "condition", "price", "sellernote", "expiresat", "createdat", "watchers", "bids", "shippingaountry", "returnsallowed") from mockData.csv with (format 'csv');"'`);
-    if (stdout) console.log('stdout:', stdout);
-    if (stderr) throw stderr;
-  })
-  .then(() => console.timeEnd('Seeder'))
   .then(() => process.exit(0));
+
+  // /* Transfer the generated CSV to the docker container */
+  // .then(async () => {
+  //   console.log('>>> Transferring to Database server, please wait... <<<');
+  //   const { stdout, stderr } = await exec(`${process.env.CSV_MV_SCRIPT}`);
+  //   if (stdout) console.log('stdout:', stdout);
+  //   if (stderr) throw stderr;
+  // })
+
+  // /* Import the CSV to the database */
+  // .then(async () => {
+  //   console.log('>>> Importing to Postgres, please wait... <<<');
+  //   const { stdout, stderr } = await exec(`${process.env.DB_SSH_SCRIPT}`);
+  //   if (stdout) console.log('stdout:', stdout);
+  //   if (stderr) throw stderr;
+  // })
+  // .then(() => console.timeEnd('Seeder'))
+  // .then(() => process.exit(0));
 
 module.exports = {
   generateProduct,
