@@ -8,6 +8,7 @@ const db = require(`./${process.env.DATABASE}.js`);
 const ReactDOMServer = require('react-dom/server');
 const BidBuy = require('../client/dist/BidBuy.js');
 const { ServerStyleSheet } = require('styled-components');
+const cache = require('express-redis-cache')({host: 'host.docker.internal'});
 
 const port = process.env.PORT;
 const app = express();
@@ -37,7 +38,7 @@ const handleRender = (req, res) => {
 app.get('/', handleRender);
 
 //find product by id
-app.get('/items/id/:id', (req, res) => {
+app.get('/items/id/:id', cache.route(), (req, res) => {
   db.getById(req.params.id)
     .then(results => res.send(results))
 });
@@ -85,6 +86,7 @@ app.post('/bid/:id', (req, res) => {
     .tap(results => validateBid(results.price))
     .tap(item => item.bids += 1)
     .then(item => db.updateItem(id, {bids: item.bids, price: parseFloat(bid)}))
+    .tap(() => cache.del('*/id/'+id, (err, del) => console.log(err, del)))
     .then(updatedItem => res.json(updatedItem[1][0]))
     .catch(err => res.json({ error: true, message: err.message }));
 });
