@@ -4,4 +4,4 @@ COPY package*.json ./
 RUN npm install
 COPY . .
 EXPOSE 3001
-CMD npm run build && node server/index.js
+CMD npm run build && npx babel client --out-dir client/dist && node server/index.js
