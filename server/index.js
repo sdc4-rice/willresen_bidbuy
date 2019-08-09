@@ -17,26 +17,6 @@ app.use(express.json());
 app.use(express.static('public'));
 app.use(cors());
 
-const handleRender = (req, res) => {
-  db.getById(req.query.id)
-    .then(results => {
-      /* Generate HTML for the stylized-component */
-      const sheet = new ServerStyleSheet();
-      const html = ReactDOMServer.renderToString(sheet.collectStyles(React.createElement(BidBuy.default, { product: results })));
-      const styleTags = sheet.getStyleTags();
-      sheet.seal();
-      /* Get HTML from the template and insert the component's HTML */
-      fs.readFile('./public/template.html', 'utf8', (err, data) => {
-        if (err) throw err;
-        const document = data.replace(/<div id="bid-buy"><\/div>/, `<div id="bid-buy">${html}</div><script src="bundle.js"></script>`)
-          .replace(/<\/head>/, `${styleTags}</head>`);
-        res.send(document);
-      });
-    })
-};
-
-app.get('/', handleRender);
-
 //find product by id
 app.get('/items/id/:id', cache.route(), (req, res) => {
   db.getById(req.params.id)
