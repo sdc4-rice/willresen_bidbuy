@@ -5,9 +5,6 @@ const fs = require('fs');
 const cors = require('cors');
 const React = require('react');
 const db = require(`./${process.env.DATABASE}.js`);
-const ReactDOMServer = require('react-dom/server');
-const BidBuy = require('../client/dist/BidBuy.js');
-const { ServerStyleSheet } = require('styled-components');
 const cache = require('express-redis-cache')({host: 'host.docker.internal'});
 
 const port = process.env.PORT;
