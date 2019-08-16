@@ -20,6 +20,7 @@
     "@babel/core": "^7.5.0",
     "@babel/preset-env": "^7.5.3",
     "@babel/preset-react": "^7.0.0",
+    "acorn": "^6.2.1",
     "babel-loader": "^8.0.6",
     "bluebird": "^3.5.5",
     "cassandra-driver": "^4.1.0",
