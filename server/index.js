@@ -5,9 +5,7 @@ const fs = require('fs');
 const cors = require('cors');
 const React = require('react');
 const db = require(`./${process.env.DATABASE}.js`);
-const ReactDOMServer = require('react-dom/server');
-const BidBuy = require('../client/dist/BidBuy.js');
-const { ServerStyleSheet } = require('styled-components');
+const cache = require('express-redis-cache')({host: 'host.docker.internal'});
 
 const port = process.env.PORT;
 const app = express();
@@ -16,28 +14,8 @@ app.use(express.json());
 app.use(express.static('public'));
 app.use(cors());
 
-const handleRender = (req, res) => {
-  db.getById(req.query.id)
-    .then(results => {
-      /* Generate HTML for the stylized-component */
-      const sheet = new ServerStyleSheet();
-      const html = ReactDOMServer.renderToString(sheet.collectStyles(React.createElement(BidBuy.default, { product: results })));
-      const styleTags = sheet.getStyleTags();
-      sheet.seal();
-      /* Get HTML from the template and insert the component's HTML */
-      fs.readFile('./public/template.html', 'utf8', (err, data) => {
-        if (err) throw err;
-        const document = data.replace(/<div id="bid-buy"><\/div>/, `<div id="bid-buy">${html}</div><script src="bundle.js"></script>`)
-          .replace(/<\/head>/, `${styleTags}</head>`);
-        res.send(document);
-      });
-    })
-};
-
-app.get('/', handleRender);
-
 //find product by id
-app.get('/items/id/:id', (req, res) => {
+app.get('/items/id/:id', cache.route(), (req, res) => {
   db.getById(req.params.id)
     .then(results => res.send(results))
 });
@@ -85,6 +63,7 @@ app.post('/bid/:id', (req, res) => {
     .tap(results => validateBid(results.price))
     .tap(item => item.bids += 1)
     .then(item => db.updateItem(id, {bids: item.bids, price: parseFloat(bid)}))
+    .tap(() => cache.del('*/id/'+id, (err, del) => console.log(err, del)))
     .then(updatedItem => res.json(updatedItem[1][0]))
     .catch(err => res.json({ error: true, message: err.message }));
 });
