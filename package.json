@@ -37,7 +37,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "sequelize": "^5.10.2",
+    "sequelize": "^5.15.1",
     "styled-components": "^4.3.2",
     "webpack": "^4.35.2",
     "webpack-cli": "^3.3.5"
